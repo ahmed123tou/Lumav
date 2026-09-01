@@ -1,12 +1,20 @@
-```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Moon favicon 🌙 -->
+    <link
+        rel="icon"
+        type="image/svg+xml"
+        href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='85'%3E🌙%3C/text%3E%3C/svg%3E"
+    >
+
     <title>Luma — Login</title>
     <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
     <div class="background">
@@ -24,7 +32,11 @@
                 <span>Luma</span>
             </div>
 
-            <!-- LOGIN -->
+
+            <!-- =========================
+                 LOGIN
+            ========================== -->
+
             <div class="auth-form active" id="loginForm">
 
                 <div class="heading">
@@ -38,6 +50,7 @@
                         <label for="loginUsername">
                             USERNAME <span>*</span>
                         </label>
+
                         <input
                             type="text"
                             id="loginUsername"
@@ -47,12 +60,14 @@
                         >
                     </div>
 
+
                     <div class="field">
                         <label for="loginPassword">
                             PASSWORD <span>*</span>
                         </label>
 
                         <div class="password-box">
+
                             <input
                                 type="password"
                                 id="loginPassword"
@@ -60,30 +75,49 @@
                                 autocomplete="current-password"
                                 required
                             >
-                            <button type="button" class="show-password" data-target="loginPassword">
+
+                            <button
+                                type="button"
+                                class="show-password"
+                                data-target="loginPassword"
+                            >
                                 Show
                             </button>
+
                         </div>
                     </div>
+
 
                     <button class="primary-btn" type="submit">
                         <span class="btn-text">Log In</span>
                         <span class="loader"></span>
                     </button>
 
-                    <div class="error-message" id="loginError"></div>
+                    <div
+                        class="error-message"
+                        id="loginError"
+                    ></div>
 
                 </form>
 
+
                 <div class="switch">
-                    Need an account?
-                    <button type="button" id="showSignup">Register</button>
+                    Don't have an account?
+                    <button
+                        type="button"
+                        id="showSignup"
+                    >
+                        Create a new account
+                    </button>
                 </div>
 
             </div>
 
 
-            <!-- SIGNUP -->
+            <!-- =========================
+                 SIGNUP
+            ========================== -->
+
             <div class="auth-form" id="signupForm">
 
                 <div class="heading">
@@ -91,12 +125,14 @@
                     <p>Join Luma and start hanging out.</p>
                 </div>
 
+
                 <form id="signup">
 
                     <div class="field">
                         <label for="signupUsername">
                             USERNAME <span>*</span>
                         </label>
+
                         <input
                             type="text"
                             id="signupUsername"
@@ -105,13 +141,18 @@
                             autocomplete="username"
                             required
                         >
-                        <small>2–24 characters</small>
+
+                        <small>
+                            2–24 characters
+                        </small>
                     </div>
+
 
                     <div class="field">
                         <label for="displayName">
                             DISPLAY NAME <span>*</span>
                         </label>
+
                         <input
                             type="text"
                             id="displayName"
@@ -121,12 +162,14 @@
                         >
                     </div>
 
+
                     <div class="field">
                         <label for="signupPassword">
                             PASSWORD <span>*</span>
                         </label>
 
                         <div class="password-box">
+
                             <input
                                 type="password"
                                 id="signupPassword"
@@ -134,13 +177,22 @@
                                 autocomplete="new-password"
                                 required
                             >
-                            <button type="button" class="show-password" data-target="signupPassword">
+
+                            <button
+                                type="button"
+                                class="show-password"
+                                data-target="signupPassword"
+                            >
                                 Show
                             </button>
+
                         </div>
 
-                        <small>At least 6 characters</small>
+                        <small>
+                            At least 6 characters
+                        </small>
                     </div>
+
 
                     <div class="field">
                         <label for="confirmPassword">
@@ -156,18 +208,36 @@
                         >
                     </div>
 
-                    <button class="primary-btn" type="submit">
-                        <span class="btn-text">Create Account</span>
+
+                    <button
+                        class="primary-btn"
+                        type="submit"
+                    >
+                        <span class="btn-text">
+                            Create Account
+                        </span>
+
                         <span class="loader"></span>
                     </button>
 
-                    <div class="error-message" id="signupError"></div>
+
+                    <div
+                        class="error-message"
+                        id="signupError"
+                    ></div>
 
                 </form>
 
+
                 <div class="switch">
                     Already have an account?
-                    <button type="button" id="showLogin">Log In</button>
+
+                    <button
+                        type="button"
+                        id="showLogin"
+                    >
+                        Log In
+                    </button>
                 </div>
 
             </div>
@@ -176,9 +246,14 @@
 
     </main>
 
-    <div class="toast" id="toast"></div>
+
+    <div
+        class="toast"
+        id="toast"
+    ></div>
+
 
     <script src="script.js"></script>
+
 </body>
 </html>
-```
