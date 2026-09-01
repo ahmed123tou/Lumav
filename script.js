@@ -1,4 +1,3 @@
-```javascript
 /* =========================================================
    LUMA — LOGIN + SIGNUP
 ========================================================= */
@@ -127,13 +126,12 @@ showLogin.addEventListener(
 
 /* =========================================================
    PASSWORD SHOW / HIDE
-   FIXED TO MATCH CURRENT HTML
 ========================================================= */
 
 function setupEyeButtons() {
 
     const eyeButtons =
-        document.querySelectorAll(".password-toggle");
+        document.querySelectorAll(".eye-button");
 
 
     eyeButtons.forEach(button => {
@@ -141,12 +139,10 @@ function setupEyeButtons() {
         button.addEventListener("click", function () {
 
             const passwordId =
-                this.getAttribute("data-target");
-
+                this.getAttribute("data-password");
 
             const input =
                 document.getElementById(passwordId);
-
 
             if (!input) {
                 return;
@@ -163,21 +159,7 @@ function setupEyeButtons() {
 
                 input.type = "text";
 
-                const openEye =
-                    this.querySelector(".eye-open");
-
-                const closedEye =
-                    this.querySelector(".eye-closed");
-
-
-                if (openEye) {
-                    openEye.style.display = "none";
-                }
-
-                if (closedEye) {
-                    closedEye.style.display = "block";
-                }
-
+                this.classList.add("showing");
 
                 this.setAttribute(
                     "aria-label",
@@ -195,21 +177,7 @@ function setupEyeButtons() {
 
                 input.type = "password";
 
-                const openEye =
-                    this.querySelector(".eye-open");
-
-                const closedEye =
-                    this.querySelector(".eye-closed");
-
-
-                if (openEye) {
-                    openEye.style.display = "block";
-                }
-
-                if (closedEye) {
-                    closedEye.style.display = "none";
-                }
-
+                this.classList.remove("showing");
 
                 this.setAttribute(
                     "aria-label",
@@ -387,16 +355,15 @@ generatePassword.addEventListener(
 
         /*
             Update eye buttons.
-            FIXED TO MATCH CURRENT HTML.
         */
 
         document
-            .querySelectorAll(".password-toggle")
+            .querySelectorAll(".eye-button")
             .forEach(button => {
 
                 const id =
                     button.getAttribute(
-                        "data-target"
+                        "data-password"
                     );
 
                 if (
@@ -404,21 +371,9 @@ generatePassword.addEventListener(
                     id === "confirmPassword"
                 ) {
 
-                    const openEye =
-                        button.querySelector(".eye-open");
-
-                    const closedEye =
-                        button.querySelector(".eye-closed");
-
-
-                    if (openEye) {
-                        openEye.style.display = "none";
-                    }
-
-                    if (closedEye) {
-                        closedEye.style.display = "block";
-                    }
-
+                    button.classList.add(
+                        "showing"
+                    );
 
                     button.setAttribute(
                         "aria-label",
@@ -800,8 +755,6 @@ if (existingSession) {
     }
 
 }
-
-
 /* =========================================================
    DISCORD OAUTH
 ========================================================= */
@@ -845,4 +798,3 @@ if (discordSignup) {
     );
 
 }
-```
