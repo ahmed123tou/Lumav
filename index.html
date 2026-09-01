@@ -803,7 +803,167 @@
     <!-- TOAST -->
 
     <div class="toast" id="toast"></div>
+<!-- =========================================================
+     LUMA — TEST CHAT
+========================================================= -->
 
+<div class="chat-app" id="chatApp">
+
+    <!-- LEFT SIDEBAR -->
+
+    <aside class="chat-sidebar">
+
+        <div class="chat-sidebar-header">
+            <div class="chat-search">
+                🔍
+                <span>Search</span>
+            </div>
+        </div>
+
+        <button class="friends-button active">
+            <span>👥</span>
+            Friends
+        </button>
+
+        <div class="dm-title">
+            DIRECT MESSAGES
+        </div>
+
+        <!-- TEST FRIEND -->
+
+        <button class="dm-user active" id="testFriend">
+
+            <div class="dm-avatar">
+                LT
+                <span class="online-dot"></span>
+            </div>
+
+            <div class="dm-user-info">
+                <strong>LumaTest</strong>
+                <span>Testing account</span>
+            </div>
+
+        </button>
+
+    </aside>
+
+
+    <!-- MAIN CHAT -->
+
+    <main class="chat-main">
+
+        <!-- CHAT HEADER -->
+
+        <header class="chat-header">
+
+            <div class="chat-avatar">
+                LT
+            </div>
+
+            <div class="chat-header-info">
+
+                <strong>LumaTest</strong>
+
+                <span>
+                    🟢 Online
+                </span>
+
+            </div>
+
+        </header>
+
+
+        <!-- MESSAGES -->
+
+        <div
+            class="messages"
+            id="messages"
+        >
+
+            <div class="welcome-chat">
+
+                <div class="large-avatar">
+                    LT
+                </div>
+
+                <h2>
+                    Welcome to LumaTest!
+                </h2>
+
+                <p>
+                    This is a testing friend so you can try the chat system.
+                </p>
+
+            </div>
+
+            <div class="message">
+
+                <div class="message-avatar">
+                    LT
+                </div>
+
+                <div class="message-content">
+
+                    <div class="message-meta">
+                        <strong>LumaTest</strong>
+                        <span>Today</span>
+                    </div>
+
+                    <div class="message-text">
+                        Hey! 👋 Send me a message to test Luma chat.
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- MESSAGE INPUT -->
+
+        <div class="message-area">
+
+            <div class="message-input-wrapper">
+
+                <button
+                    type="button"
+                    class="chat-plus"
+                    id="chatPlus"
+                >
+                    +
+                </button>
+
+                <input
+                    id="messageInput"
+                    type="text"
+                    placeholder="Message @LumaTest"
+                    autocomplete="off"
+                >
+
+                <button
+                    type="button"
+                    class="chat-action"
+                    id="emojiButton"
+                >
+                    🙂
+                </button>
+
+                <button
+                    type="button"
+                    class="send-button"
+                    id="sendMessage"
+                >
+                    ➤
+                </button>
+
+            </div>
+
+        </div>
+
+    </main>
+
+</div>
 
     <script src="script.js"></script>
 
