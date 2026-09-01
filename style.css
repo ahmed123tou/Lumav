@@ -2034,3 +2034,501 @@ body {
         display: block;
     }
 }
+/* =========================================================
+   LUMA — TEST CHAT
+========================================================= */
+
+.chat-app {
+    display: none;
+
+    position: fixed;
+    inset: 0;
+
+    z-index: 100;
+
+    background: #111214;
+
+    color: var(--text);
+
+    font-family:
+        "gg sans",
+        "Noto Sans",
+        Arial,
+        sans-serif;
+}
+
+
+/* SIDEBAR */
+
+.chat-sidebar {
+    width: 280px;
+
+    height: 100vh;
+
+    flex-shrink: 0;
+
+    background: #1e1f22;
+
+    border-right: 1px solid rgba(255,255,255,0.06);
+
+    padding: 14px 10px;
+}
+
+
+.chat-sidebar-header {
+    padding: 0 4px 12px;
+}
+
+
+.chat-search {
+    height: 36px;
+
+    display: flex;
+    align-items: center;
+
+    gap: 8px;
+
+    padding: 0 12px;
+
+    border-radius: 6px;
+
+    background: #111214;
+
+    color: #72767d;
+
+    font-size: 13px;
+}
+
+
+.friends-button {
+    width: 100%;
+    height: 40px;
+
+    display: flex;
+    align-items: center;
+
+    gap: 12px;
+
+    padding: 0 12px;
+
+    border: none;
+    border-radius: 6px;
+
+    background: transparent;
+
+    color: #b5bac1;
+
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    text-align: left;
+}
+
+
+.friends-button:hover,
+.friends-button.active {
+    background: #35373c;
+    color: #f2f3f5;
+}
+
+
+.dm-title {
+    margin: 24px 8px 8px;
+
+    color: #949ba4;
+
+    font-size: 11px;
+    font-weight: 700;
+
+    letter-spacing: 0.5px;
+}
+
+
+.dm-user {
+    width: 100%;
+    height: 52px;
+
+    display: flex;
+    align-items: center;
+
+    gap: 12px;
+
+    padding: 6px 8px;
+
+    border: none;
+    border-radius: 6px;
+
+    background: transparent;
+
+    color: white;
+
+    font-family: inherit;
+
+    cursor: pointer;
+
+    text-align: left;
+}
+
+
+.dm-user:hover,
+.dm-user.active {
+    background: #35373c;
+}
+
+
+.dm-avatar,
+.chat-avatar,
+.message-avatar,
+.large-avatar {
+    position: relative;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    flex-shrink: 0;
+
+    border-radius: 50%;
+
+    background: var(--primary);
+
+    color: white;
+
+    font-weight: 700;
+}
+
+
+.dm-avatar {
+    width: 36px;
+    height: 36px;
+
+    font-size: 12px;
+}
+
+
+.online-dot {
+    position: absolute;
+
+    right: -1px;
+    bottom: -1px;
+
+    width: 11px;
+    height: 11px;
+
+    border: 2px solid #1e1f22;
+
+    border-radius: 50%;
+
+    background: #23a559;
+}
+
+
+.dm-user-info {
+    min-width: 0;
+
+    display: flex;
+    flex-direction: column;
+
+    gap: 2px;
+}
+
+
+.dm-user-info strong {
+    font-size: 14px;
+}
+
+
+.dm-user-info span {
+    color: #949ba4;
+
+    font-size: 11px;
+}
+
+
+/* MAIN CHAT */
+
+.chat-main {
+    min-width: 0;
+
+    height: 100vh;
+
+    flex: 1;
+
+    display: flex;
+    flex-direction: column;
+
+    background: #313338;
+}
+
+
+/* HEADER */
+
+.chat-header {
+    height: 62px;
+
+    display: flex;
+    align-items: center;
+
+    gap: 12px;
+
+    padding: 0 18px;
+
+    border-bottom: 1px solid rgba(0,0,0,0.25);
+
+    box-shadow:
+        0 1px 3px rgba(0,0,0,0.2);
+}
+
+
+.chat-avatar {
+    width: 38px;
+    height: 38px;
+
+    font-size: 13px;
+}
+
+
+.chat-header-info {
+    display: flex;
+    flex-direction: column;
+
+    gap: 2px;
+}
+
+
+.chat-header-info strong {
+    font-size: 15px;
+}
+
+
+.chat-header-info span {
+    color: #949ba4;
+
+    font-size: 11px;
+}
+
+
+/* MESSAGES */
+
+.messages {
+    flex: 1;
+
+    min-height: 0;
+
+    overflow-y: auto;
+
+    padding: 24px 20px;
+}
+
+
+.welcome-chat {
+    padding: 35px 0 25px;
+
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+
+    margin-bottom: 20px;
+}
+
+
+.large-avatar {
+    width: 72px;
+    height: 72px;
+
+    margin-bottom: 14px;
+
+    font-size: 22px;
+}
+
+
+.welcome-chat h2 {
+    margin-bottom: 6px;
+
+    font-size: 22px;
+}
+
+
+.welcome-chat p {
+    color: #949ba4;
+
+    font-size: 14px;
+}
+
+
+.message {
+    display: flex;
+
+    gap: 12px;
+
+    margin-bottom: 18px;
+}
+
+
+.message-avatar {
+    width: 40px;
+    height: 40px;
+
+    font-size: 12px;
+}
+
+
+.message-content {
+    min-width: 0;
+}
+
+
+.message-meta {
+    display: flex;
+    align-items: baseline;
+
+    gap: 8px;
+
+    margin-bottom: 4px;
+}
+
+
+.message-meta strong {
+    font-size: 14px;
+}
+
+
+.message-meta span {
+    color: #72767d;
+
+    font-size: 11px;
+}
+
+
+.message-text {
+    color: #dbdee1;
+
+    font-size: 14px;
+
+    line-height: 21px;
+
+    word-break: break-word;
+}
+
+
+/* MESSAGE AREA */
+
+.message-area {
+    padding: 0 20px 20px;
+}
+
+
+.message-input-wrapper {
+    min-height: 48px;
+
+    display: flex;
+    align-items: center;
+
+    gap: 8px;
+
+    padding: 5px 8px;
+
+    border-radius: 8px;
+
+    background: #383a40;
+}
+
+
+.chat-plus,
+.chat-action,
+.send-button {
+    width: 34px;
+    height: 34px;
+
+    flex-shrink: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: none;
+    border-radius: 6px;
+
+    background: transparent;
+
+    color: #b5bac1;
+
+    font-size: 20px;
+
+    cursor: pointer;
+}
+
+
+.chat-plus:hover,
+.chat-action:hover {
+    background: rgba(255,255,255,0.08);
+
+    color: white;
+}
+
+
+.message-input-wrapper input {
+    flex: 1;
+
+    min-width: 0;
+
+    height: 38px;
+
+    border: none;
+    outline: none;
+
+    background: transparent;
+
+    color: #f2f3f5;
+
+    font-family: inherit;
+    font-size: 14px;
+}
+
+
+.message-input-wrapper input::placeholder {
+    color: #72767d;
+}
+
+
+.send-button {
+    color: #5865f2;
+
+    font-size: 18px;
+}
+
+
+.send-button:hover {
+    background: rgba(88,101,242,0.15);
+
+    color: #7289ff;
+}
+
+
+/* MOBILE */
+
+@media (max-width: 700px) {
+
+    .chat-sidebar {
+        width: 220px;
+    }
+
+}
+
+
+@media (max-width: 520px) {
+
+    .chat-sidebar {
+        display: none;
+    }
+
+    .message-area {
+        padding: 0 10px 10px;
+    }
+
+    .messages {
+        padding: 15px 12px;
+    }
+
+}
