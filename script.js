@@ -113,81 +113,22 @@ function openLogin() {
 }
 
 
-if (showSignup) {
-    showSignup.addEventListener(
-        "click",
-        openSignup
-    );
-}
+showSignup.addEventListener(
+    "click",
+    openSignup
+);
 
 
-if (showLogin) {
-    showLogin.addEventListener(
-        "click",
-        openLogin
-    );
-}
+showLogin.addEventListener(
+    "click",
+    openLogin
+);
 
 
 /* =========================================================
    PASSWORD SHOW / HIDE
+   FIXED TO MATCH CURRENT HTML
 ========================================================= */
-
-function updateEyeIcon(button, showing) {
-
-    const openEye =
-        button.querySelector(".eye-open");
-
-    const closedEye =
-        button.querySelector(".eye-closed");
-
-
-    if (showing) {
-
-        if (openEye) {
-            openEye.style.display = "none";
-        }
-
-        if (closedEye) {
-            closedEye.style.display = "block";
-        }
-
-        button.classList.add("showing");
-
-        button.setAttribute(
-            "aria-label",
-            "Hide password"
-        );
-
-        button.setAttribute(
-            "title",
-            "Hide password"
-        );
-
-    } else {
-
-        if (openEye) {
-            openEye.style.display = "block";
-        }
-
-        if (closedEye) {
-            closedEye.style.display = "none";
-        }
-
-        button.classList.remove("showing");
-
-        button.setAttribute(
-            "aria-label",
-            "Show password"
-        );
-
-        button.setAttribute(
-            "title",
-            "Show password"
-        );
-    }
-}
-
 
 function setupEyeButtons() {
 
@@ -197,60 +138,92 @@ function setupEyeButtons() {
 
     eyeButtons.forEach(button => {
 
-        button.addEventListener(
-            "click",
-            function () {
+        button.addEventListener("click", function () {
 
-                /*
-                    HTML uses:
-
-                    data-target="loginPassword"
-
-                    So we use data-target here.
-                */
-
-                const passwordId =
-                    this.getAttribute("data-target");
+            const passwordId =
+                this.getAttribute("data-target");
 
 
-                const input =
-                    document.getElementById(passwordId);
+            const input =
+                document.getElementById(passwordId);
 
 
-                if (!input) {
-                    return;
+            if (!input) {
+                return;
+            }
+
+
+            const isHidden =
+                input.type === "password";
+
+
+            if (isHidden) {
+
+                /* SHOW */
+
+                input.type = "text";
+
+                const openEye =
+                    this.querySelector(".eye-open");
+
+                const closedEye =
+                    this.querySelector(".eye-closed");
+
+
+                if (openEye) {
+                    openEye.style.display = "none";
+                }
+
+                if (closedEye) {
+                    closedEye.style.display = "block";
                 }
 
 
-                const showing =
-                    input.type === "text";
+                this.setAttribute(
+                    "aria-label",
+                    "Hide password"
+                );
+
+                this.setAttribute(
+                    "title",
+                    "Hide password"
+                );
+
+            } else {
+
+                /* HIDE */
+
+                input.type = "password";
+
+                const openEye =
+                    this.querySelector(".eye-open");
+
+                const closedEye =
+                    this.querySelector(".eye-closed");
 
 
-                if (showing) {
-
-                    /* HIDE */
-
-                    input.type = "password";
-
-                    updateEyeIcon(
-                        this,
-                        false
-                    );
-
-                } else {
-
-                    /* SHOW */
-
-                    input.type = "text";
-
-                    updateEyeIcon(
-                        this,
-                        true
-                    );
+                if (openEye) {
+                    openEye.style.display = "block";
                 }
+
+                if (closedEye) {
+                    closedEye.style.display = "none";
+                }
+
+
+                this.setAttribute(
+                    "aria-label",
+                    "Show password"
+                );
+
+                this.setAttribute(
+                    "title",
+                    "Show password"
+                );
 
             }
-        );
+
+        });
 
     });
 
@@ -304,62 +277,50 @@ function validDisplayName(name) {
    USERNAME LIVE FILTER
 ========================================================= */
 
-if (signupUsername) {
+signupUsername.addEventListener(
+    "input",
+    function () {
 
-    signupUsername.addEventListener(
-        "input",
-        function () {
+        this.value =
+            this.value.replace(
+                /[^A-Za-z0-9_-]/g,
+                ""
+            );
 
-            this.value =
-                this.value.replace(
-                    /[^A-Za-z0-9_-]/g,
-                    ""
-                );
-
-        }
-    );
-
-}
+    }
+);
 
 
 /* =========================================================
    PASSWORD LIVE FILTER
 ========================================================= */
 
-if (signupPassword) {
+signupPassword.addEventListener(
+    "input",
+    function () {
 
-    signupPassword.addEventListener(
-        "input",
-        function () {
+        this.value =
+            this.value.replace(
+                /[^A-Za-z0-9]/g,
+                ""
+            );
 
-            this.value =
-                this.value.replace(
-                    /[^A-Za-z0-9]/g,
-                    ""
-                );
-
-        }
-    );
-
-}
+    }
+);
 
 
-if (confirmPassword) {
+confirmPassword.addEventListener(
+    "input",
+    function () {
 
-    confirmPassword.addEventListener(
-        "input",
-        function () {
+        this.value =
+            this.value.replace(
+                /[^A-Za-z0-9]/g,
+                ""
+            );
 
-            this.value =
-                this.value.replace(
-                    /[^A-Za-z0-9]/g,
-                    ""
-                );
-
-        }
-    );
-
-}
+    }
+);
 
 
 /* =========================================================
@@ -398,395 +359,412 @@ function generateRandomPassword(length = 12) {
    GENERATE PASSWORD
 ========================================================= */
 
-if (generatePassword) {
+generatePassword.addEventListener(
+    "click",
+    function () {
 
-    generatePassword.addEventListener(
-        "click",
-        function () {
-
-            const password =
-                generateRandomPassword(12);
+        const password =
+            generateRandomPassword(12);
 
 
-            signupPassword.value =
-                password;
+        signupPassword.value =
+            password;
 
-            confirmPassword.value =
-                password;
-
-
-            /*
-                Show generated passwords.
-            */
-
-            signupPassword.type =
-                "text";
-
-            confirmPassword.type =
-                "text";
+        confirmPassword.value =
+            password;
 
 
-            /*
-                Update the two eye buttons.
-            */
+        /*
+            Show generated password.
+        */
 
-            document
-                .querySelectorAll(".password-toggle")
-                .forEach(button => {
+        signupPassword.type =
+            "text";
 
-                    const id =
-                        button.getAttribute(
-                            "data-target"
-                        );
+        confirmPassword.type =
+            "text";
 
-                    if (
-                        id === "signupPassword" ||
-                        id === "confirmPassword"
-                    ) {
 
-                        updateEyeIcon(
-                            button,
-                            true
-                        );
+        /*
+            Update eye buttons.
+            FIXED TO MATCH CURRENT HTML.
+        */
 
+        document
+            .querySelectorAll(".password-toggle")
+            .forEach(button => {
+
+                const id =
+                    button.getAttribute(
+                        "data-target"
+                    );
+
+                if (
+                    id === "signupPassword" ||
+                    id === "confirmPassword"
+                ) {
+
+                    const openEye =
+                        button.querySelector(".eye-open");
+
+                    const closedEye =
+                        button.querySelector(".eye-closed");
+
+
+                    if (openEye) {
+                        openEye.style.display = "none";
                     }
 
-                });
+                    if (closedEye) {
+                        closedEye.style.display = "block";
+                    }
 
 
-            const oldHTML =
-                this.innerHTML;
+                    button.setAttribute(
+                        "aria-label",
+                        "Hide password"
+                    );
+
+                    button.setAttribute(
+                        "title",
+                        "Hide password"
+                    );
+
+                }
+
+            });
 
 
-            this.innerHTML = `
-                <span class="generate-icon">✓</span>
-                <span>Password generated!</span>
-            `;
+        const oldHTML =
+            this.innerHTML;
 
 
-            showToast(
-                "Random password generated!"
-            );
+        this.innerHTML = `
+            <span class="generate-icon">✓</span>
+            <span>Password generated!</span>
+        `;
 
 
-            setTimeout(() => {
+        showToast(
+            "Random password generated!"
+        );
 
-                this.innerHTML =
-                    oldHTML;
 
-            }, 1800);
+        setTimeout(() => {
 
-        }
-    );
+            this.innerHTML =
+                oldHTML;
 
-}
+        }, 1800);
+
+    }
+);
 
 
 /* =========================================================
    SIGNUP
 ========================================================= */
 
-if (signup) {
+signup.addEventListener(
+    "submit",
+    function (event) {
 
-    signup.addEventListener(
-        "submit",
-        function (event) {
+        event.preventDefault();
 
-            event.preventDefault();
-
-            signupError.textContent = "";
+        signupError.textContent = "";
 
 
-            const button =
-                signup.querySelector(
-                    ".primary-btn"
-                );
+        const button =
+            signup.querySelector(
+                ".primary-btn"
+            );
 
 
-            const username =
-                signupUsername.value.trim();
+        const username =
+            signupUsername.value.trim();
 
-            const name =
-                displayName.value.trim();
+        const name =
+            displayName.value.trim();
 
-            const password =
-                signupPassword.value;
+        const password =
+            signupPassword.value;
 
-            const confirm =
-                confirmPassword.value;
-
-
-            /* USERNAME */
-
-            if (!validUsername(username)) {
-
-                signupError.textContent =
-                    "Username can only contain letters, numbers, _ and -.";
-
-                return;
-            }
+        const confirm =
+            confirmPassword.value;
 
 
-            /* DISPLAY NAME */
+        /* USERNAME */
 
-            if (!validDisplayName(name)) {
+        if (!validUsername(username)) {
 
-                signupError.textContent =
-                    "Please enter a display name.";
+            signupError.textContent =
+                "Username can only contain letters, numbers, _ and -.";
 
-                return;
-            }
-
-
-            /* PASSWORD */
-
-            if (!validPassword(password)) {
-
-                signupError.textContent =
-                    "Password must be 6–32 characters and contain only letters and numbers.";
-
-                return;
-            }
+            return;
+        }
 
 
-            /* CONFIRM */
+        /* DISPLAY NAME */
 
-            if (password !== confirm) {
+        if (!validDisplayName(name)) {
 
-                signupError.textContent =
-                    "Passwords do not match.";
+            signupError.textContent =
+                "Please enter a display name.";
 
-                return;
-            }
-
-
-            const users =
-                getUsers();
+            return;
+        }
 
 
-            /* CHECK USERNAME */
+        /* PASSWORD */
 
-            const usernameTaken =
-                users.some(
-                    user =>
-                        user.username.toLowerCase() ===
-                        username.toLowerCase()
-                );
+        if (!validPassword(password)) {
 
+            signupError.textContent =
+                "Password must be 6–32 characters and contain only letters and numbers.";
 
-            if (usernameTaken) {
-
-                signupError.textContent =
-                    "That username is already taken.";
-
-                return;
-            }
+            return;
+        }
 
 
-            /* LOADING */
+        /* CONFIRM */
 
-            button.classList.add(
+        if (password !== confirm) {
+
+            signupError.textContent =
+                "Passwords do not match.";
+
+            return;
+        }
+
+
+        const users =
+            getUsers();
+
+
+        /* CHECK USERNAME */
+
+        const usernameTaken =
+            users.some(
+                user =>
+                    user.username.toLowerCase() ===
+                    username.toLowerCase()
+            );
+
+
+        if (usernameTaken) {
+
+            signupError.textContent =
+                "That username is already taken.";
+
+            return;
+        }
+
+
+        /* LOADING */
+
+        button.classList.add(
+            "loading"
+        );
+
+        button.disabled = true;
+
+
+        setTimeout(() => {
+
+            const newUser = {
+
+                id:
+                    crypto.randomUUID
+                        ? crypto.randomUUID()
+                        : Date.now().toString(),
+
+                username:
+                    username,
+
+                displayName:
+                    name,
+
+                password:
+                    password,
+
+                createdAt:
+                    new Date().toISOString()
+
+            };
+
+
+            users.push(
+                newUser
+            );
+
+            saveUsers(
+                users
+            );
+
+
+            /* =====================================
+               REMEMBER LOGIN INFORMATION
+            ===================================== */
+
+            loginUsername.value =
+                username;
+
+            loginPassword.value =
+                password;
+
+
+            /* =====================================
+               RESET SIGNUP
+            ===================================== */
+
+            signup.reset();
+
+
+            /*
+                reset() would normally erase the
+                generated password, but we already
+                copied it to login.
+            */
+
+
+            button.classList.remove(
                 "loading"
             );
 
-            button.disabled = true;
+            button.disabled = false;
 
 
-            setTimeout(() => {
+            /* =====================================
+               GO TO LOGIN
+            ===================================== */
 
-                const newUser = {
-
-                    id:
-                        crypto.randomUUID
-                            ? crypto.randomUUID()
-                            : Date.now().toString(),
-
-                    username:
-                        username,
-
-                    displayName:
-                        name,
-
-                    password:
-                        password,
-
-                    createdAt:
-                        new Date().toISOString()
-
-                };
+            openLogin();
 
 
-                users.push(
-                    newUser
-                );
+            /*
+                Make sure both fields remain filled.
+            */
 
-                saveUsers(
-                    users
-                );
+            loginUsername.value =
+                username;
 
-
-                /* =====================================
-                   REMEMBER LOGIN INFORMATION
-                ===================================== */
-
-                loginUsername.value =
-                    username;
-
-                loginPassword.value =
-                    password;
+            loginPassword.value =
+                password;
 
 
-                /* =====================================
-                   RESET SIGNUP
-                ===================================== */
-
-                signup.reset();
+            showToast(
+                "Account created! Your login details are ready."
+            );
 
 
-                button.classList.remove(
-                    "loading"
-                );
+        }, 650);
 
-                button.disabled = false;
-
-
-                /* =====================================
-                   GO TO LOGIN
-                ===================================== */
-
-                openLogin();
-
-
-                /*
-                    Make sure both fields remain filled.
-                */
-
-                loginUsername.value =
-                    username;
-
-                loginPassword.value =
-                    password;
-
-
-                showToast(
-                    "Account created! Your login details are ready."
-                );
-
-
-            }, 650);
-
-        }
-    );
-
-}
+    }
+);
 
 
 /* =========================================================
    LOGIN
 ========================================================= */
 
-if (login) {
+login.addEventListener(
+    "submit",
+    function (event) {
 
-    login.addEventListener(
-        "submit",
-        function (event) {
+        event.preventDefault();
 
-            event.preventDefault();
-
-            loginError.textContent = "";
+        loginError.textContent = "";
 
 
-            const button =
-                login.querySelector(
-                    ".primary-btn"
-                );
+        const button =
+            login.querySelector(
+                ".primary-btn"
+            );
 
 
-            const username =
-                loginUsername.value.trim();
+        const username =
+            loginUsername.value.trim();
 
-            const password =
-                loginPassword.value;
-
-
-            const users =
-                getUsers();
+        const password =
+            loginPassword.value;
 
 
-            const user =
-                users.find(
-                    account =>
-                        account.username.toLowerCase() ===
-                        username.toLowerCase() &&
-                        account.password ===
-                        password
-                );
+        const users =
+            getUsers();
 
 
-            if (!user) {
+        const user =
+            users.find(
+                account =>
+                    account.username.toLowerCase() ===
+                    username.toLowerCase() &&
+                    account.password ===
+                    password
+            );
 
-                loginError.textContent =
-                    "Invalid username or password.";
 
-                return;
-            }
+        if (!user) {
+
+            loginError.textContent =
+                "Invalid username or password.";
+
+            return;
+        }
 
 
-            /* LOADING */
+        /* LOADING */
 
-            button.classList.add(
+        button.classList.add(
+            "loading"
+        );
+
+        button.disabled = true;
+
+
+        setTimeout(() => {
+
+            const session = {
+
+                id:
+                    user.id,
+
+                username:
+                    user.username,
+
+                displayName:
+                    user.displayName
+
+            };
+
+
+            localStorage.setItem(
+                CURRENT_USER_KEY,
+                JSON.stringify(session)
+            );
+
+
+            button.classList.remove(
                 "loading"
             );
 
-            button.disabled = true;
+            button.disabled = false;
 
 
-            setTimeout(() => {
-
-                const session = {
-
-                    id:
-                        user.id,
-
-                    username:
-                        user.username,
-
-                    displayName:
-                        user.displayName
-
-                };
+            showToast(
+                `Welcome back, ${user.displayName}!`
+            );
 
 
-                localStorage.setItem(
-                    CURRENT_USER_KEY,
-                    JSON.stringify(session)
-                );
+            console.log(
+                "Luma logged in:",
+                session
+            );
 
 
-                button.classList.remove(
-                    "loading"
-                );
+        }, 650);
 
-                button.disabled = false;
-
-
-                showToast(
-                    `Welcome back, ${user.displayName}!`
-                );
-
-
-                console.log(
-                    "Luma logged in:",
-                    session
-                );
-
-
-            }, 650);
-
-        }
-    );
-
-}
+    }
+);
 
 
 /* =========================================================
@@ -832,12 +810,11 @@ const DISCORD_OAUTH_URL =
     "https://luma-backend-w8gq.onrender.com/auth/discord";
 
 
-/*
-    LOGIN DISCORD BUTTON
-*/
-
 const discordLogin =
     document.getElementById("discordLogin");
+
+const discordSignup =
+    document.getElementById("discordSignup");
 
 
 if (discordLogin) {
@@ -855,22 +832,9 @@ if (discordLogin) {
 }
 
 
-/*
-    SIGNUP DISCORD BUTTON
+if (discordSignup) {
 
-    Our HTML uses:
-    discordLoginSignup
-*/
-
-const discordLoginSignup =
-    document.getElementById(
-        "discordLoginSignup"
-    );
-
-
-if (discordLoginSignup) {
-
-    discordLoginSignup.addEventListener(
+    discordSignup.addEventListener(
         "click",
         () => {
 
