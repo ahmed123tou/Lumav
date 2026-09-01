@@ -1,11 +1,17 @@
 /* =========================================================
    LUMA
-   LOCAL LOGIN + SIGNUP SYSTEM
+   LOGIN + SIGNUP
+========================================================= */
+
+
+/* =========================================================
+   STORAGE
 ========================================================= */
 
 const USERS_KEY = "LUMA_USERS";
-const CURRENT_USER_KEY = "LUMA_CURRENT_USER";
-const GENERATED_PASSWORD_KEY = "LUMA_GENERATED_PASSWORD";
+
+const CURRENT_USER_KEY =
+    "LUMA_CURRENT_USER";
 
 
 /* =========================================================
@@ -39,33 +45,56 @@ const signupError =
 const toast =
     document.getElementById("toast");
 
-const generatePassword =
-    document.getElementById("generatePassword");
 
 const signupUsername =
-    document.getElementById("signupUsername");
+    document.getElementById(
+        "signupUsername"
+    );
 
 const displayName =
-    document.getElementById("displayName");
+    document.getElementById(
+        "displayName"
+    );
 
 const signupPassword =
-    document.getElementById("signupPassword");
+    document.getElementById(
+        "signupPassword"
+    );
 
 const confirmPassword =
-    document.getElementById("confirmPassword");
+    document.getElementById(
+        "confirmPassword"
+    );
+
+const generatePassword =
+    document.getElementById(
+        "generatePassword"
+    );
 
 
 /* =========================================================
-   STORAGE
+   GET USERS
 ========================================================= */
 
 function getUsers() {
 
     try {
 
-        return JSON.parse(
-            localStorage.getItem(USERS_KEY)
-        ) || [];
+        const saved =
+            localStorage.getItem(
+                USERS_KEY
+            );
+
+        if (!saved) {
+            return [];
+        }
+
+        const users =
+            JSON.parse(saved);
+
+        return Array.isArray(users)
+            ? users
+            : [];
 
     } catch {
 
@@ -75,6 +104,10 @@ function getUsers() {
 
 }
 
+
+/* =========================================================
+   SAVE USERS
+========================================================= */
 
 function saveUsers(users) {
 
@@ -92,13 +125,18 @@ function saveUsers(users) {
 
 function showToast(message) {
 
-    toast.textContent = message;
+    toast.textContent =
+        message;
 
-    toast.classList.add("show");
+    toast.classList.add(
+        "show"
+    );
 
     setTimeout(() => {
 
-        toast.classList.remove("show");
+        toast.classList.remove(
+            "show"
+        );
 
     }, 2500);
 
@@ -106,33 +144,49 @@ function showToast(message) {
 
 
 /* =========================================================
-   LOGIN / SIGNUP SWITCH
+   SWITCH TO SIGNUP
 ========================================================= */
 
 function openSignup() {
 
-    loginForm.classList.remove("active");
+    loginForm.classList.remove(
+        "active"
+    );
 
-    signupForm.classList.add("active");
+    signupForm.classList.add(
+        "active"
+    );
 
     loginError.textContent = "";
+
     signupError.textContent = "";
 
-    document.title = "Luma — Register";
+    document.title =
+        "Luma — Register";
 
 }
 
 
+/* =========================================================
+   SWITCH TO LOGIN
+========================================================= */
+
 function openLogin() {
 
-    signupForm.classList.remove("active");
+    signupForm.classList.remove(
+        "active"
+    );
 
-    loginForm.classList.add("active");
+    loginForm.classList.add(
+        "active"
+    );
 
     loginError.textContent = "";
+
     signupError.textContent = "";
 
-    document.title = "Luma — Login";
+    document.title =
+        "Luma — Login";
 
 }
 
@@ -150,26 +204,29 @@ showLogin.addEventListener(
 
 
 /* =========================================================
-   PASSWORD EYE BUTTONS
+   PASSWORD SHOW / HIDE
+   WORKS FOR EVERY EYE BUTTON
 ========================================================= */
 
 document
-    .querySelectorAll(".password-toggle")
+    .querySelectorAll(".eye-button")
     .forEach(button => {
 
         button.addEventListener(
             "click",
             () => {
 
-                const target =
-                    button.getAttribute(
-                        "data-target"
-                    );
+                const passwordId =
+                    button.dataset.password;
 
                 const input =
-                    document.getElementById(target);
+                    document.getElementById(
+                        passwordId
+                    );
 
-                if (!input) return;
+                if (!input) {
+                    return;
+                }
 
 
                 const openEye =
@@ -183,46 +240,54 @@ document
                     );
 
 
-                if (
-                    input.type === "password"
-                ) {
+                const showing =
+                    input.type === "text";
 
-                    input.type = "text";
+
+                if (showing) {
+
+                    /* HIDE */
+
+                    input.type =
+                        "password";
 
                     openEye.style.display =
-                        "none";
+                        "block";
 
                     closedEye.style.display =
-                        "block";
+                        "none";
 
                     button.setAttribute(
                         "aria-label",
-                        "Hide password"
+                        "Show password"
                     );
 
                     button.setAttribute(
                         "title",
-                        "Hide password"
+                        "Show password"
                     );
 
                 } else {
 
-                    input.type = "password";
+                    /* SHOW */
+
+                    input.type =
+                        "text";
 
                     openEye.style.display =
-                        "block";
+                        "none";
 
                     closedEye.style.display =
-                        "none";
+                        "block";
 
                     button.setAttribute(
                         "aria-label",
-                        "Show password"
+                        "Hide password"
                     );
 
                     button.setAttribute(
                         "title",
-                        "Show password"
+                        "Hide password"
                     );
 
                 }
@@ -234,26 +299,47 @@ document
 
 
 /* =========================================================
-   USERNAME RULE
-   ONLY:
-   A-Z
-   a-z
-   0-9
-   _
-   -
+   USERNAME VALIDATION
 ========================================================= */
 
 function validUsername(username) {
 
-    return /^[A-Za-z0-9_-]{2,24}$/.test(
-        username
-    );
+    /*
+        Allowed:
+
+        A-Z
+        a-z
+        0-9
+        _
+        -
+
+        Nothing else.
+    */
+
+    return /^[A-Za-z0-9_-]{2,24}$/
+        .test(username);
 
 }
 
 
 /* =========================================================
-   DISPLAY NAME
+   PASSWORD VALIDATION
+========================================================= */
+
+function validPassword(password) {
+
+    /*
+        Letters + numbers only.
+    */
+
+    return /^[A-Za-z0-9]{6,32}$/
+        .test(password);
+
+}
+
+
+/* =========================================================
+   DISPLAY NAME VALIDATION
 ========================================================= */
 
 function validDisplayName(name) {
@@ -267,138 +353,7 @@ function validDisplayName(name) {
 
 
 /* =========================================================
-   PASSWORD RULE
-   ONLY LETTERS + NUMBERS
-========================================================= */
-
-function validPassword(password) {
-
-    return /^[A-Za-z0-9]{6,32}$/.test(
-        password
-    );
-
-}
-
-
-/* =========================================================
-   GENERATE RANDOM PASSWORD
-========================================================= */
-
-function createRandomPassword(length = 12) {
-
-    const characters =
-        "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-
-    let password = "";
-
-    const randomValues =
-        new Uint32Array(length);
-
-    crypto.getRandomValues(
-        randomValues
-    );
-
-
-    for (
-        let i = 0;
-        i < length;
-        i++
-    ) {
-
-        password +=
-            characters[
-                randomValues[i] %
-                characters.length
-            ];
-
-    }
-
-
-    return password;
-
-}
-
-
-/* =========================================================
-   GENERATE PASSWORD BUTTON
-========================================================= */
-
-generatePassword.addEventListener(
-    "click",
-    () => {
-
-        const password =
-            createRandomPassword(12);
-
-
-        /* Put it in both fields */
-
-        signupPassword.value =
-            password;
-
-        confirmPassword.value =
-            password;
-
-
-        /* Temporarily save it */
-
-        sessionStorage.setItem(
-            GENERATED_PASSWORD_KEY,
-            password
-        );
-
-
-        /* Make password visible */
-
-        signupPassword.type =
-            "text";
-
-        confirmPassword.type =
-            "text";
-
-
-        /* Update eye buttons */
-
-        document
-            .querySelectorAll(
-                '.password-toggle[data-target="signupPassword"], .password-toggle[data-target="confirmPassword"]'
-            )
-            .forEach(button => {
-
-                const openEye =
-                    button.querySelector(
-                        ".eye-open"
-                    );
-
-                const closedEye =
-                    button.querySelector(
-                        ".eye-closed"
-                    );
-
-                openEye.style.display =
-                    "none";
-
-                closedEye.style.display =
-                    "block";
-
-                button.setAttribute(
-                    "aria-label",
-                    "Hide password"
-                );
-
-            });
-
-
-        showToast(
-            "Random password generated!"
-        );
-
-    }
-);
-
-
-/* =========================================================
-   BLOCK INVALID USERNAME CHARACTERS
+   CLEAN USERNAME WHILE TYPING
 ========================================================= */
 
 signupUsername.addEventListener(
@@ -416,7 +371,7 @@ signupUsername.addEventListener(
 
 
 /* =========================================================
-   BLOCK INVALID PASSWORD CHARACTERS
+   CLEAN PASSWORD WHILE TYPING
 ========================================================= */
 
 signupPassword.addEventListener(
@@ -448,29 +403,155 @@ confirmPassword.addEventListener(
 
 
 /* =========================================================
-   RESTORE GENERATED PASSWORD
+   RANDOM PASSWORD GENERATOR
 ========================================================= */
 
-const savedGeneratedPassword =
-    sessionStorage.getItem(
-        GENERATED_PASSWORD_KEY
-    );
+function generateRandomPassword(
+    length = 12
+) {
+
+    const characters =
+        "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
 
 
-if (savedGeneratedPassword) {
+    let password = "";
+
 
     /*
-        We don't automatically display it.
-        If the user generated one earlier in
-        this browser session, it can be restored
-        when entering the signup page.
+        crypto.getRandomValues gives
+        us proper browser randomness.
     */
 
-    console.log(
-        "Luma generated password is available in this session."
+    const random =
+        new Uint32Array(length);
+
+
+    crypto.getRandomValues(
+        random
     );
 
+
+    for (
+        let i = 0;
+        i < length;
+        i++
+    ) {
+
+        password +=
+            characters[
+                random[i] %
+                characters.length
+            ];
+
+    }
+
+
+    return password;
+
 }
+
+
+/* =========================================================
+   GENERATE PASSWORD BUTTON
+========================================================= */
+
+generatePassword.addEventListener(
+    "click",
+    () => {
+
+        const password =
+            generateRandomPassword(12);
+
+
+        /* Put password into BOTH fields */
+
+        signupPassword.value =
+            password;
+
+        confirmPassword.value =
+            password;
+
+
+        /*
+            Show the generated password
+            automatically.
+        */
+
+        signupPassword.type =
+            "text";
+
+        confirmPassword.type =
+            "text";
+
+
+        /*
+            Update both eye buttons.
+        */
+
+        document
+            .querySelectorAll(
+                '.eye-button[data-password="signupPassword"], .eye-button[data-password="confirmPassword"]'
+            )
+            .forEach(button => {
+
+                const openEye =
+                    button.querySelector(
+                        ".eye-open"
+                    );
+
+                const closedEye =
+                    button.querySelector(
+                        ".eye-closed"
+                    );
+
+                openEye.style.display =
+                    "none";
+
+                closedEye.style.display =
+                    "block";
+
+                button.setAttribute(
+                    "aria-label",
+                    "Hide password"
+                );
+
+                button.setAttribute(
+                    "title",
+                    "Hide password"
+                );
+
+            });
+
+
+        /*
+            Change button temporarily
+            so the user knows it worked.
+        */
+
+        const originalHTML =
+            generatePassword.innerHTML;
+
+
+        generatePassword.innerHTML = `
+            <span class="generate-icon">✓</span>
+            <span>Password generated!</span>
+        `;
+
+
+        showToast(
+            "Random password generated!"
+        );
+
+
+        setTimeout(() => {
+
+            generatePassword.innerHTML =
+                originalHTML;
+
+        }, 1800);
+
+    }
+);
 
 
 /* =========================================================
@@ -483,7 +564,8 @@ signup.addEventListener(
 
         event.preventDefault();
 
-        signupError.textContent = "";
+        signupError.textContent =
+            "";
 
 
         const button =
@@ -540,16 +622,6 @@ signup.addEventListener(
         }
 
 
-        if (name.length > 32) {
-
-            signupError.textContent =
-                "Display name cannot be longer than 32 characters.";
-
-            return;
-
-        }
-
-
         /* =====================================
            PASSWORD
         ===================================== */
@@ -583,7 +655,7 @@ signup.addEventListener(
 
 
         /* =====================================
-           USERS
+           CHECK USERNAME
         ===================================== */
 
         const users =
@@ -644,18 +716,13 @@ signup.addEventListener(
             };
 
 
-            users.push(newUser);
+            users.push(
+                newUser
+            );
 
-            saveUsers(users);
 
-
-            /*
-                Remove temporary generated
-                password after account creation.
-            */
-
-            sessionStorage.removeItem(
-                GENERATED_PASSWORD_KEY
+            saveUsers(
+                users
             );
 
 
@@ -663,7 +730,8 @@ signup.addEventListener(
                 "loading"
             );
 
-            button.disabled = false;
+            button.disabled =
+                false;
 
 
             signup.reset();
@@ -676,7 +744,8 @@ signup.addEventListener(
                 .getElementById(
                     "loginUsername"
                 )
-                .value = username;
+                .value =
+                username;
 
 
             showToast(
@@ -699,7 +768,8 @@ login.addEventListener(
 
         event.preventDefault();
 
-        loginError.textContent = "";
+        loginError.textContent =
+            "";
 
 
         const button =
@@ -734,9 +804,9 @@ login.addEventListener(
                 account =>
                     account.username
                         .toLowerCase() ===
-                        username.toLowerCase() &&
+                    username.toLowerCase() &&
                     account.password ===
-                        password
+                    password
             );
 
 
@@ -754,25 +824,31 @@ login.addEventListener(
             "loading"
         );
 
-        button.disabled = true;
+        button.disabled =
+            true;
 
 
         setTimeout(() => {
 
+            const session = {
+
+                id:
+                    user.id,
+
+                username:
+                    user.username,
+
+                displayName:
+                    user.displayName
+
+            };
+
+
             localStorage.setItem(
                 CURRENT_USER_KEY,
-                JSON.stringify({
-
-                    id:
-                        user.id,
-
-                    username:
-                        user.username,
-
-                    displayName:
-                        user.displayName
-
-                })
+                JSON.stringify(
+                    session
+                )
             );
 
 
@@ -780,7 +856,8 @@ login.addEventListener(
                 "loading"
             );
 
-            button.disabled = false;
+            button.disabled =
+                false;
 
 
             showToast(
@@ -790,7 +867,7 @@ login.addEventListener(
 
             console.log(
                 "Luma logged in:",
-                user
+                session
             );
 
         }, 650);
@@ -800,22 +877,22 @@ login.addEventListener(
 
 
 /* =========================================================
-   EXISTING SESSION
+   CHECK EXISTING SESSION
 ========================================================= */
 
-const currentUser =
+const existingSession =
     localStorage.getItem(
         CURRENT_USER_KEY
     );
 
 
-if (currentUser) {
+if (existingSession) {
 
     try {
 
         const user =
             JSON.parse(
-                currentUser
+                existingSession
             );
 
         console.log(
