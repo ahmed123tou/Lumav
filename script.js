@@ -1,33 +1,62 @@
 /* =========================================================
    LUMA
-   LOCAL LOGIN + SIGNUP
+   LOCAL LOGIN + SIGNUP SYSTEM
 ========================================================= */
 
 const USERS_KEY = "LUMA_USERS";
 const CURRENT_USER_KEY = "LUMA_CURRENT_USER";
+const GENERATED_PASSWORD_KEY = "LUMA_GENERATED_PASSWORD";
 
 
 /* =========================================================
    ELEMENTS
 ========================================================= */
 
-const loginForm = document.getElementById("loginForm");
-const signupForm = document.getElementById("signupForm");
+const loginForm =
+    document.getElementById("loginForm");
 
-const showSignup = document.getElementById("showSignup");
-const showLogin = document.getElementById("showLogin");
+const signupForm =
+    document.getElementById("signupForm");
 
-const login = document.getElementById("login");
-const signup = document.getElementById("signup");
+const showSignup =
+    document.getElementById("showSignup");
 
-const loginError = document.getElementById("loginError");
-const signupError = document.getElementById("signupError");
+const showLogin =
+    document.getElementById("showLogin");
 
-const toast = document.getElementById("toast");
+const login =
+    document.getElementById("login");
+
+const signup =
+    document.getElementById("signup");
+
+const loginError =
+    document.getElementById("loginError");
+
+const signupError =
+    document.getElementById("signupError");
+
+const toast =
+    document.getElementById("toast");
+
+const generatePassword =
+    document.getElementById("generatePassword");
+
+const signupUsername =
+    document.getElementById("signupUsername");
+
+const displayName =
+    document.getElementById("displayName");
+
+const signupPassword =
+    document.getElementById("signupPassword");
+
+const confirmPassword =
+    document.getElementById("confirmPassword");
 
 
 /* =========================================================
-   LOCAL STORAGE
+   STORAGE
 ========================================================= */
 
 function getUsers() {
@@ -77,7 +106,7 @@ function showToast(message) {
 
 
 /* =========================================================
-   SWITCH TO SIGNUP
+   LOGIN / SIGNUP SWITCH
 ========================================================= */
 
 function openSignup() {
@@ -94,10 +123,6 @@ function openSignup() {
 }
 
 
-/* =========================================================
-   SWITCH TO LOGIN
-========================================================= */
-
 function openLogin() {
 
     signupForm.classList.remove("active");
@@ -112,10 +137,6 @@ function openLogin() {
 }
 
 
-/* =========================================================
-   BUTTONS
-========================================================= */
-
 showSignup.addEventListener(
     "click",
     openSignup
@@ -129,81 +150,324 @@ showLogin.addEventListener(
 
 
 /* =========================================================
-   SHOW / HIDE PASSWORD
+   PASSWORD EYE BUTTONS
 ========================================================= */
 
 document
     .querySelectorAll(".password-toggle")
     .forEach(button => {
 
-        button.addEventListener("click", () => {
+        button.addEventListener(
+            "click",
+            () => {
 
-            const targetId =
-                button.getAttribute("data-target");
+                const target =
+                    button.getAttribute(
+                        "data-target"
+                    );
 
-            const input =
-                document.getElementById(targetId);
+                const input =
+                    document.getElementById(target);
 
-            if (!input) return;
+                if (!input) return;
 
 
-            if (input.type === "password") {
+                const openEye =
+                    button.querySelector(
+                        ".eye-open"
+                    );
 
-                input.type = "text";
+                const closedEye =
+                    button.querySelector(
+                        ".eye-closed"
+                    );
 
-                button.textContent = "🙈";
 
-                button.setAttribute(
-                    "aria-label",
-                    "Hide password"
-                );
+                if (
+                    input.type === "password"
+                ) {
 
-                button.setAttribute(
-                    "title",
-                    "Hide password"
-                );
+                    input.type = "text";
 
-            } else {
+                    openEye.style.display =
+                        "none";
 
-                input.type = "password";
+                    closedEye.style.display =
+                        "block";
 
-                button.textContent = "👁";
+                    button.setAttribute(
+                        "aria-label",
+                        "Hide password"
+                    );
 
-                button.setAttribute(
-                    "aria-label",
-                    "Show password"
-                );
+                    button.setAttribute(
+                        "title",
+                        "Hide password"
+                    );
 
-                button.setAttribute(
-                    "title",
-                    "Show password"
-                );
+                } else {
+
+                    input.type = "password";
+
+                    openEye.style.display =
+                        "block";
+
+                    closedEye.style.display =
+                        "none";
+
+                    button.setAttribute(
+                        "aria-label",
+                        "Show password"
+                    );
+
+                    button.setAttribute(
+                        "title",
+                        "Show password"
+                    );
+
+                }
 
             }
-
-        });
+        );
 
     });
 
 
 /* =========================================================
-   VALIDATION
+   USERNAME RULE
+   ONLY:
+   A-Z
+   a-z
+   0-9
+   _
+   -
 ========================================================= */
 
 function validUsername(username) {
 
-    return /^[a-zA-Z0-9_.-]{2,24}$/.test(
+    return /^[A-Za-z0-9_-]{2,24}$/.test(
         username
     );
 
 }
 
 
+/* =========================================================
+   DISPLAY NAME
+========================================================= */
+
 function validDisplayName(name) {
 
     return (
-        name.trim().length >= 2 &&
-        name.trim().length <= 32
+        name.trim().length >= 1 &&
+        name.length <= 32
+    );
+
+}
+
+
+/* =========================================================
+   PASSWORD RULE
+   ONLY LETTERS + NUMBERS
+========================================================= */
+
+function validPassword(password) {
+
+    return /^[A-Za-z0-9]{6,32}$/.test(
+        password
+    );
+
+}
+
+
+/* =========================================================
+   GENERATE RANDOM PASSWORD
+========================================================= */
+
+function createRandomPassword(length = 12) {
+
+    const characters =
+        "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
+    let password = "";
+
+    const randomValues =
+        new Uint32Array(length);
+
+    crypto.getRandomValues(
+        randomValues
+    );
+
+
+    for (
+        let i = 0;
+        i < length;
+        i++
+    ) {
+
+        password +=
+            characters[
+                randomValues[i] %
+                characters.length
+            ];
+
+    }
+
+
+    return password;
+
+}
+
+
+/* =========================================================
+   GENERATE PASSWORD BUTTON
+========================================================= */
+
+generatePassword.addEventListener(
+    "click",
+    () => {
+
+        const password =
+            createRandomPassword(12);
+
+
+        /* Put it in both fields */
+
+        signupPassword.value =
+            password;
+
+        confirmPassword.value =
+            password;
+
+
+        /* Temporarily save it */
+
+        sessionStorage.setItem(
+            GENERATED_PASSWORD_KEY,
+            password
+        );
+
+
+        /* Make password visible */
+
+        signupPassword.type =
+            "text";
+
+        confirmPassword.type =
+            "text";
+
+
+        /* Update eye buttons */
+
+        document
+            .querySelectorAll(
+                '.password-toggle[data-target="signupPassword"], .password-toggle[data-target="confirmPassword"]'
+            )
+            .forEach(button => {
+
+                const openEye =
+                    button.querySelector(
+                        ".eye-open"
+                    );
+
+                const closedEye =
+                    button.querySelector(
+                        ".eye-closed"
+                    );
+
+                openEye.style.display =
+                    "none";
+
+                closedEye.style.display =
+                    "block";
+
+                button.setAttribute(
+                    "aria-label",
+                    "Hide password"
+                );
+
+            });
+
+
+        showToast(
+            "Random password generated!"
+        );
+
+    }
+);
+
+
+/* =========================================================
+   BLOCK INVALID USERNAME CHARACTERS
+========================================================= */
+
+signupUsername.addEventListener(
+    "input",
+    () => {
+
+        signupUsername.value =
+            signupUsername.value.replace(
+                /[^A-Za-z0-9_-]/g,
+                ""
+            );
+
+    }
+);
+
+
+/* =========================================================
+   BLOCK INVALID PASSWORD CHARACTERS
+========================================================= */
+
+signupPassword.addEventListener(
+    "input",
+    () => {
+
+        signupPassword.value =
+            signupPassword.value.replace(
+                /[^A-Za-z0-9]/g,
+                ""
+            );
+
+    }
+);
+
+
+confirmPassword.addEventListener(
+    "input",
+    () => {
+
+        confirmPassword.value =
+            confirmPassword.value.replace(
+                /[^A-Za-z0-9]/g,
+                ""
+            );
+
+    }
+);
+
+
+/* =========================================================
+   RESTORE GENERATED PASSWORD
+========================================================= */
+
+const savedGeneratedPassword =
+    sessionStorage.getItem(
+        GENERATED_PASSWORD_KEY
+    );
+
+
+if (savedGeneratedPassword) {
+
+    /*
+        We don't automatically display it.
+        If the user generated one earlier in
+        this browser session, it can be restored
+        when entering the signup page.
+    */
+
+    console.log(
+        "Luma generated password is available in this session."
     );
 
 }
@@ -213,267 +477,330 @@ function validDisplayName(name) {
    SIGNUP
 ========================================================= */
 
-signup.addEventListener("submit", event => {
+signup.addEventListener(
+    "submit",
+    event => {
 
-    event.preventDefault();
+        event.preventDefault();
 
-    signupError.textContent = "";
+        signupError.textContent = "";
 
-    const button =
-        signup.querySelector(".primary-btn");
 
+        const button =
+            signup.querySelector(
+                ".primary-btn"
+            );
 
-    const username =
-        document
-            .getElementById("signupUsername")
-            .value
-            .trim();
 
+        const username =
+            signupUsername.value.trim();
 
-    const displayName =
-        document
-            .getElementById("displayName")
-            .value
-            .trim();
 
+        const name =
+            displayName.value;
 
-    const password =
-        document
-            .getElementById("signupPassword")
-            .value;
 
+        const password =
+            signupPassword.value;
 
-    const confirmPassword =
-        document
-            .getElementById("confirmPassword")
-            .value;
 
+        const confirm =
+            confirmPassword.value;
 
-    /* USERNAME */
 
-    if (!validUsername(username)) {
+        /* =====================================
+           USERNAME
+        ===================================== */
 
-        signupError.textContent =
-            "Username must be 2–24 characters and can only contain letters, numbers, _, . or -.";
+        if (
+            !validUsername(username)
+        ) {
 
-        return;
+            signupError.textContent =
+                "Username can only contain letters, numbers, _ and -.";
 
-    }
+            return;
 
+        }
 
-    /* DISPLAY NAME */
 
-    if (!validDisplayName(displayName)) {
+        /* =====================================
+           DISPLAY NAME
+        ===================================== */
 
-        signupError.textContent =
-            "Display name must be between 2 and 32 characters.";
+        if (
+            !validDisplayName(name)
+        ) {
 
-        return;
+            signupError.textContent =
+                "Please enter a display name.";
 
-    }
+            return;
 
+        }
 
-    /* PASSWORD */
 
-    if (password.length < 6) {
+        if (name.length > 32) {
 
-        signupError.textContent =
-            "Password must be at least 6 characters.";
+            signupError.textContent =
+                "Display name cannot be longer than 32 characters.";
 
-        return;
+            return;
 
-    }
+        }
 
 
-    /* CONFIRM PASSWORD */
+        /* =====================================
+           PASSWORD
+        ===================================== */
 
-    if (password !== confirmPassword) {
+        if (
+            !validPassword(password)
+        ) {
 
-        signupError.textContent =
-            "Passwords do not match.";
+            signupError.textContent =
+                "Password must be 6–32 characters and contain only letters and numbers.";
 
-        return;
+            return;
 
-    }
+        }
 
 
-    /* USERS */
+        /* =====================================
+           CONFIRM PASSWORD
+        ===================================== */
 
-    const users = getUsers();
+        if (
+            password !== confirm
+        ) {
 
+            signupError.textContent =
+                "Passwords do not match.";
 
-    /* USERNAME TAKEN */
+            return;
 
-    const usernameTaken = users.some(
-        user =>
-            user.username.toLowerCase() ===
-            username.toLowerCase()
-    );
+        }
 
 
-    if (usernameTaken) {
+        /* =====================================
+           USERS
+        ===================================== */
 
-        signupError.textContent =
-            "That username is already taken.";
+        const users =
+            getUsers();
 
-        return;
 
-    }
+        const usernameTaken =
+            users.some(
+                user =>
+                    user.username
+                        .toLowerCase() ===
+                    username.toLowerCase()
+            );
 
 
-    /* LOADING */
+        if (usernameTaken) {
 
-    button.classList.add("loading");
+            signupError.textContent =
+                "That username is already taken.";
 
-    button.disabled = true;
+            return;
 
+        }
 
-    setTimeout(() => {
 
-        const newUser = {
+        /* =====================================
+           LOADING
+        ===================================== */
 
-            id:
-                crypto.randomUUID
-                    ? crypto.randomUUID()
-                    : Date.now().toString(),
-
-            username: username,
-
-            displayName: displayName,
-
-            password: password,
-
-            createdAt:
-                new Date().toISOString()
-
-        };
-
-
-        users.push(newUser);
-
-        saveUsers(users);
-
-
-        button.classList.remove("loading");
-
-        button.disabled = false;
-
-
-        signup.reset();
-
-
-        /* BACK TO LOGIN */
-
-        openLogin();
-
-
-        /* FILL USERNAME */
-
-        document
-            .getElementById("loginUsername")
-            .value = username;
-
-
-        showToast(
-            "Account created! You can now log in."
+        button.classList.add(
+            "loading"
         );
 
-    }, 650);
+        button.disabled = true;
 
-});
+
+        setTimeout(() => {
+
+            const newUser = {
+
+                id:
+                    crypto.randomUUID
+                        ? crypto.randomUUID()
+                        : Date.now().toString(),
+
+                username:
+                    username,
+
+                displayName:
+                    name,
+
+                password:
+                    password,
+
+                createdAt:
+                    new Date().toISOString()
+
+            };
+
+
+            users.push(newUser);
+
+            saveUsers(users);
+
+
+            /*
+                Remove temporary generated
+                password after account creation.
+            */
+
+            sessionStorage.removeItem(
+                GENERATED_PASSWORD_KEY
+            );
+
+
+            button.classList.remove(
+                "loading"
+            );
+
+            button.disabled = false;
+
+
+            signup.reset();
+
+
+            openLogin();
+
+
+            document
+                .getElementById(
+                    "loginUsername"
+                )
+                .value = username;
+
+
+            showToast(
+                "Account created! You can now log in."
+            );
+
+        }, 650);
+
+    }
+);
 
 
 /* =========================================================
    LOGIN
 ========================================================= */
 
-login.addEventListener("submit", event => {
+login.addEventListener(
+    "submit",
+    event => {
 
-    event.preventDefault();
+        event.preventDefault();
 
-    loginError.textContent = "";
-
-    const button =
-        login.querySelector(".primary-btn");
-
-
-    const username =
-        document
-            .getElementById("loginUsername")
-            .value
-            .trim();
+        loginError.textContent = "";
 
 
-    const password =
-        document
-            .getElementById("loginPassword")
-            .value;
+        const button =
+            login.querySelector(
+                ".primary-btn"
+            );
 
 
-    const users = getUsers();
+        const username =
+            document
+                .getElementById(
+                    "loginUsername"
+                )
+                .value
+                .trim();
 
 
-    const user = users.find(
-        account =>
-            account.username.toLowerCase() ===
-                username.toLowerCase() &&
-            account.password === password
-    );
+        const password =
+            document
+                .getElementById(
+                    "loginPassword"
+                )
+                .value;
 
 
-    if (!user) {
+        const users =
+            getUsers();
 
-        loginError.textContent =
-            "Invalid username or password.";
 
-        return;
+        const user =
+            users.find(
+                account =>
+                    account.username
+                        .toLowerCase() ===
+                        username.toLowerCase() &&
+                    account.password ===
+                        password
+            );
+
+
+        if (!user) {
+
+            loginError.textContent =
+                "Invalid username or password.";
+
+            return;
+
+        }
+
+
+        button.classList.add(
+            "loading"
+        );
+
+        button.disabled = true;
+
+
+        setTimeout(() => {
+
+            localStorage.setItem(
+                CURRENT_USER_KEY,
+                JSON.stringify({
+
+                    id:
+                        user.id,
+
+                    username:
+                        user.username,
+
+                    displayName:
+                        user.displayName
+
+                })
+            );
+
+
+            button.classList.remove(
+                "loading"
+            );
+
+            button.disabled = false;
+
+
+            showToast(
+                `Welcome back, ${user.displayName}!`
+            );
+
+
+            console.log(
+                "Luma logged in:",
+                user
+            );
+
+        }, 650);
 
     }
-
-
-    button.classList.add("loading");
-
-    button.disabled = true;
-
-
-    setTimeout(() => {
-
-        localStorage.setItem(
-            CURRENT_USER_KEY,
-            JSON.stringify({
-
-                id: user.id,
-
-                username: user.username,
-
-                displayName: user.displayName
-
-            })
-        );
-
-
-        button.classList.remove("loading");
-
-        button.disabled = false;
-
-
-        showToast(
-            `Welcome back, ${user.displayName}!`
-        );
-
-
-        console.log(
-            "Logged in:",
-            user
-        );
-
-    }, 650);
-
-});
+);
 
 
 /* =========================================================
-   CHECK EXISTING SESSION
+   EXISTING SESSION
 ========================================================= */
 
 const currentUser =
@@ -487,10 +814,12 @@ if (currentUser) {
     try {
 
         const user =
-            JSON.parse(currentUser);
+            JSON.parse(
+                currentUser
+            );
 
         console.log(
-            `Luma session found for @${user.username}`
+            `Luma session: @${user.username}`
         );
 
     } catch {
