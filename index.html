@@ -1,3 +1,464 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link
+        rel="icon"
+        type="image/svg+xml"
+        href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext x='50%25' y='70%25' text-anchor='middle' font-size='75'%3E🌙%3C/text%3E%3C/svg%3E"
+    >
+
+    <title>Luma — Login</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <div class="background">
+        <div class="glow glow-1"></div>
+        <div class="glow glow-2"></div>
+        <div class="stars"></div>
+    </div>
+
+
+    <main class="auth-container">
+
+        <section class="auth-card">
+
+            <!-- BRAND -->
+
+            <div class="brand">
+                <div class="brand-icon">✦</div>
+                <span>Luma</span>
+            </div>
+
+
+            <!-- =================================================
+                 LOGIN
+            ================================================== -->
+
+            <div
+                class="auth-form active"
+                id="loginForm"
+            >
+
+                <div class="heading">
+                    <h1>Welcome back!</h1>
+
+                    <p>
+                        We're so excited to see you again!
+                    </p>
+                </div>
+
+
+                <form id="login">
+
+                    <!-- USERNAME -->
+
+                    <div class="field">
+
+                        <label for="loginUsername">
+                            USERNAME <span>*</span>
+                        </label>
+
+                        <input
+                            id="loginUsername"
+                            type="text"
+                            placeholder="Enter your username"
+                            autocomplete="username"
+                            maxlength="24"
+                            required
+                        >
+
+                    </div>
+
+
+                    <!-- PASSWORD -->
+
+                    <div class="field">
+
+                        <label for="loginPassword">
+                            PASSWORD <span>*</span>
+                        </label>
+
+                        <div class="password-wrapper">
+
+                            <input
+                                id="loginPassword"
+                                type="password"
+                                placeholder="Enter your password"
+                                autocomplete="current-password"
+                                required
+                            >
+
+                            <button
+                                type="button"
+                                class="password-toggle"
+                                data-target="loginPassword"
+                                aria-label="Show password"
+                                title="Show password"
+                            >
+
+                                <svg
+                                    class="eye-icon eye-open"
+                                    viewBox="0 0 24 24"
+                                >
+                                    <path
+                                        d="M2.5 12s3.5-6 9.5-6 9.5 6 9.5 6-3.5 6-9.5 6-9.5-6-9.5-6Z"
+                                    ></path>
+
+                                    <circle
+                                        cx="12"
+                                        cy="12"
+                                        r="2.8"
+                                    ></circle>
+                                </svg>
+
+                                <svg
+                                    class="eye-icon eye-closed"
+                                    viewBox="0 0 24 24"
+                                >
+                                    <path d="M3 3l18 18"></path>
+
+                                    <path
+                                        d="M10.6 6.2A9.9 9.9 0 0 1 12 6c6 0 9.5 6 9.5 6a18.7 18.7 0 0 1-3.1 3.7"
+                                    ></path>
+
+                                    <path
+                                        d="M6.1 8.1C3.7 9.9 2.5 12 2.5 12s3.5 6 9.5 6c1.1 0 2.1-.2 3-.5"
+                                    ></path>
+
+                                    <path
+                                        d="M9.9 9.9a3 3 0 0 0 4.2 4.2"
+                                    ></path>
+                                </svg>
+
+                            </button>
+
+                        </div>
+
+                    </div>
+
+
+                    <button
+                        class="primary-btn"
+                        type="submit"
+                    >
+
+                        <span class="btn-text">
+                            Log In
+                        </span>
+
+                        <span class="loader"></span>
+
+                    </button>
+
+
+                    <div
+                        class="error-message"
+                        id="loginError"
+                    ></div>
+
+                </form>
+
+
+                <div class="switch">
+
+                    <span>
+                        Don't have an account?
+                    </span>
+
+                    <button
+                        type="button"
+                        id="showSignup"
+                    >
+                        Create a new account
+                    </button>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- =================================================
+                 SIGNUP
+            ================================================== -->
+
+            <div
+                class="auth-form"
+                id="signupForm"
+            >
+
+                <div class="heading">
+
+                    <h1>Create an account</h1>
+
+                    <p>
+                        Join Luma and start hanging out.
+                    </p>
+
+                </div>
+
+
+                <form id="signup">
+
+                    <!-- USERNAME -->
+
+                    <div class="field">
+
+                        <label for="signupUsername">
+                            USERNAME <span>*</span>
+                        </label>
+
+                        <input
+                            id="signupUsername"
+                            type="text"
+                            placeholder="Choose a username"
+                            maxlength="24"
+                            autocomplete="username"
+                            required
+                        >
+
+                        <small>
+                            Letters, numbers, _ and - only
+                        </small>
+
+                    </div>
+
+
+                    <!-- DISPLAY NAME -->
+
+                    <div class="field">
+
+                        <label for="displayName">
+                            DISPLAY NAME <span>*</span>
+                        </label>
+
+                        <input
+                            id="displayName"
+                            type="text"
+                            placeholder="Choose a display name"
+                            maxlength="32"
+                            required
+                        >
+
+                        <small>
+                            You can use spaces and symbols
+                        </small>
+
+                    </div>
+
+
+                    <!-- PASSWORD -->
+
+                    <div class="field">
+
+                        <label for="signupPassword">
+                            PASSWORD <span>*</span>
+                        </label>
+
+                        <div class="password-wrapper">
+
+                            <input
+                                id="signupPassword"
+                                type="password"
+                                placeholder="Letters and numbers only"
+                                autocomplete="new-password"
+                                maxlength="32"
+                                required
+                            >
+
+                            <button
+                                type="button"
+                                class="password-toggle"
+                                data-target="signupPassword"
+                                aria-label="Show password"
+                                title="Show password"
+                            >
+
+                                <svg
+                                    class="eye-icon eye-open"
+                                    viewBox="0 0 24 24"
+                                >
+                                    <path
+                                        d="M2.5 12s3.5-6 9.5-6 9.5 6 9.5 6-3.5 6-9.5 6-9.5-6-9.5-6Z"
+                                    ></path>
+
+                                    <circle
+                                        cx="12"
+                                        cy="12"
+                                        r="2.8"
+                                    ></circle>
+                                </svg>
+
+                                <svg
+                                    class="eye-icon eye-closed"
+                                    viewBox="0 0 24 24"
+                                >
+                                    <path d="M3 3l18 18"></path>
+
+                                    <path
+                                        d="M10.6 6.2A9.9 9.9 0 0 1 12 6c6 0 9.5 6 9.5 6a18.7 18.7 0 0 1-3.1 3.7"
+                                    ></path>
+
+                                    <path
+                                        d="M6.1 8.1C3.7 9.9 2.5 12 2.5 12s3.5 6 9.5 6c1.1 0 2.1-.2 3-.5"
+                                    ></path>
+
+                                    <path
+                                        d="M9.9 9.9a3 3 0 0 0 4.2 4.2"
+                                    ></path>
+                                </svg>
+
+                            </button>
+
+                        </div>
+
+
+                        <!-- GENERATE PASSWORD -->
+
+                        <button
+                            type="button"
+                            class="generate-password"
+                            id="generatePassword"
+                        >
+                            ✦ Generate random password
+                        </button>
+
+
+                        <small>
+                            6–32 letters and numbers only
+                        </small>
+
+                    </div>
+
+
+                    <!-- CONFIRM PASSWORD -->
+
+                    <div class="field">
+
+                        <label for="confirmPassword">
+                            CONFIRM PASSWORD <span>*</span>
+                        </label>
+
+                        <div class="password-wrapper">
+
+                            <input
+                                id="confirmPassword"
+                                type="password"
+                                placeholder="Enter your password again"
+                                autocomplete="new-password"
+                                maxlength="32"
+                                required
+                            >
+
+                            <button
+                                type="button"
+                                class="password-toggle"
+                                data-target="confirmPassword"
+                                aria-label="Show password"
+                                title="Show password"
+                            >
+
+                                <svg
+                                    class="eye-icon eye-open"
+                                    viewBox="0 0 24 24"
+                                >
+                                    <path
+                                        d="M2.5 12s3.5-6 9.5-6 9.5 6 9.5 6-3.5 6-9.5 6-9.5-6-9.5-6Z"
+                                    ></path>
+
+                                    <circle
+                                        cx="12"
+                                        cy="12"
+                                        r="2.8"
+                                    ></circle>
+                                </svg>
+
+                                <svg
+                                    class="eye-icon eye-closed"
+                                    viewBox="0 0 24 24"
+                                >
+                                    <path d="M3 3l18 18"></path>
+
+                                    <path
+                                        d="M10.6 6.2A9.9 9.9 0 0 1 12 6c6 0 9.5 6 9.5 6a18.7 18.7 0 0 1-3.1 3.7"
+                                    ></path>
+
+                                    <path
+                                        d="M6.1 8.1C3.7 9.9 2.5 12 2.5 12s3.5 6 9.5 6c1.1 0 2.1-.2 3-.5"
+                                    ></path>
+
+                                    <path
+                                        d="M9.9 9.9a3 3 0 0 0 4.2 4.2"
+                                    ></path>
+                                </svg>
+
+                            </button>
+
+                        </div>
+
+                    </div>
+
+
+                    <button
+                        class="primary-btn"
+                        type="submit"
+                    >
+
+                        <span class="btn-text">
+                            Create Account
+                        </span>
+
+                        <span class="loader"></span>
+
+                    </button>
+
+
+                    <div
+                        class="error-message"
+                        id="signupError"
+                    ></div>
+
+                </form>
+
+
+                <div class="switch">
+
+                    <span>
+                        Already have an account?
+                    </span>
+
+                    <button
+                        type="button"
+                        id="showLogin"
+                    >
+                        Log In
+                    </button>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <div
+        class="toast"
+        id="toast"
+    ></div>
+
+
+    <script src="script.js"></script>
+
+</body>
+</html>
 <div class="oauth-divider">
     <span>OR</span>
 </div>
