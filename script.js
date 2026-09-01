@@ -1,6 +1,6 @@
 /* =========================================================
    LUMA
-   LOGIN + SIGNUP
+   LOCAL LOGIN + SIGNUP
 ========================================================= */
 
 const USERS_KEY = "LUMA_USERS";
@@ -27,25 +27,33 @@ const toast = document.getElementById("toast");
 
 
 /* =========================================================
-   STORAGE
+   LOCAL STORAGE
 ========================================================= */
 
 function getUsers() {
+
     try {
+
         return JSON.parse(
             localStorage.getItem(USERS_KEY)
         ) || [];
+
     } catch {
+
         return [];
+
     }
+
 }
 
 
 function saveUsers(users) {
+
     localStorage.setItem(
         USERS_KEY,
         JSON.stringify(users)
     );
+
 }
 
 
@@ -60,16 +68,19 @@ function showToast(message) {
     toast.classList.add("show");
 
     setTimeout(() => {
+
         toast.classList.remove("show");
+
     }, 2500);
+
 }
 
 
 /* =========================================================
-   LOGIN → SIGNUP
+   SWITCH TO SIGNUP
 ========================================================= */
 
-showSignup.addEventListener("click", () => {
+function openSignup() {
 
     loginForm.classList.remove("active");
 
@@ -80,14 +91,14 @@ showSignup.addEventListener("click", () => {
 
     document.title = "Luma — Register";
 
-});
+}
 
 
 /* =========================================================
-   SIGNUP → LOGIN
+   SWITCH TO LOGIN
 ========================================================= */
 
-showLogin.addEventListener("click", () => {
+function openLogin() {
 
     signupForm.classList.remove("active");
 
@@ -98,41 +109,81 @@ showLogin.addEventListener("click", () => {
 
     document.title = "Luma — Login";
 
-});
+}
+
+
+/* =========================================================
+   BUTTONS
+========================================================= */
+
+showSignup.addEventListener(
+    "click",
+    openSignup
+);
+
+
+showLogin.addEventListener(
+    "click",
+    openLogin
+);
 
 
 /* =========================================================
    SHOW / HIDE PASSWORD
 ========================================================= */
 
-document.querySelectorAll(".show-password").forEach(button => {
+document
+    .querySelectorAll(".password-toggle")
+    .forEach(button => {
 
-    button.addEventListener("click", () => {
+        button.addEventListener("click", () => {
 
-        const targetId = button.dataset.target;
+            const targetId =
+                button.getAttribute("data-target");
 
-        const input = document.getElementById(targetId);
+            const input =
+                document.getElementById(targetId);
 
-        if (!input) return;
+            if (!input) return;
 
 
-        if (input.type === "password") {
+            if (input.type === "password") {
 
-            input.type = "text";
+                input.type = "text";
 
-            button.textContent = "Hide";
+                button.textContent = "🙈";
 
-        } else {
+                button.setAttribute(
+                    "aria-label",
+                    "Hide password"
+                );
 
-            input.type = "password";
+                button.setAttribute(
+                    "title",
+                    "Hide password"
+                );
 
-            button.textContent = "Show";
+            } else {
 
-        }
+                input.type = "password";
+
+                button.textContent = "👁";
+
+                button.setAttribute(
+                    "aria-label",
+                    "Show password"
+                );
+
+                button.setAttribute(
+                    "title",
+                    "Show password"
+                );
+
+            }
+
+        });
 
     });
-
-});
 
 
 /* =========================================================
@@ -141,7 +192,9 @@ document.querySelectorAll(".show-password").forEach(button => {
 
 function validUsername(username) {
 
-    return /^[a-zA-Z0-9_.-]{2,24}$/.test(username);
+    return /^[a-zA-Z0-9_.-]{2,24}$/.test(
+        username
+    );
 
 }
 
@@ -185,14 +238,18 @@ signup.addEventListener("submit", event => {
 
 
     const password =
-        document.getElementById("signupPassword").value;
+        document
+            .getElementById("signupPassword")
+            .value;
 
 
     const confirmPassword =
-        document.getElementById("confirmPassword").value;
+        document
+            .getElementById("confirmPassword")
+            .value;
 
 
-    /* Username */
+    /* USERNAME */
 
     if (!validUsername(username)) {
 
@@ -200,10 +257,11 @@ signup.addEventListener("submit", event => {
             "Username must be 2–24 characters and can only contain letters, numbers, _, . or -.";
 
         return;
+
     }
 
 
-    /* Display name */
+    /* DISPLAY NAME */
 
     if (!validDisplayName(displayName)) {
 
@@ -211,10 +269,11 @@ signup.addEventListener("submit", event => {
             "Display name must be between 2 and 32 characters.";
 
         return;
+
     }
 
 
-    /* Password */
+    /* PASSWORD */
 
     if (password.length < 6) {
 
@@ -222,10 +281,11 @@ signup.addEventListener("submit", event => {
             "Password must be at least 6 characters.";
 
         return;
+
     }
 
 
-    /* Confirm password */
+    /* CONFIRM PASSWORD */
 
     if (password !== confirmPassword) {
 
@@ -233,15 +293,16 @@ signup.addEventListener("submit", event => {
             "Passwords do not match.";
 
         return;
+
     }
 
 
-    /* Get accounts */
+    /* USERS */
 
     const users = getUsers();
 
 
-    /* Check username */
+    /* USERNAME TAKEN */
 
     const usernameTaken = users.some(
         user =>
@@ -256,10 +317,11 @@ signup.addEventListener("submit", event => {
             "That username is already taken.";
 
         return;
+
     }
 
 
-    /* Loading */
+    /* LOADING */
 
     button.classList.add("loading");
 
@@ -272,8 +334,8 @@ signup.addEventListener("submit", event => {
 
             id:
                 crypto.randomUUID
-                ? crypto.randomUUID()
-                : Date.now().toString(),
+                    ? crypto.randomUUID()
+                    : Date.now().toString(),
 
             username: username,
 
@@ -300,20 +362,16 @@ signup.addEventListener("submit", event => {
         signup.reset();
 
 
-        /* Go back to login */
+        /* BACK TO LOGIN */
 
-        signupForm.classList.remove("active");
-
-        loginForm.classList.add("active");
-
-        document.title = "Luma — Login";
+        openLogin();
 
 
-        /* Put username into login */
+        /* FILL USERNAME */
 
-        document.getElementById(
-            "loginUsername"
-        ).value = username;
+        document
+            .getElementById("loginUsername")
+            .value = username;
 
 
         showToast(
@@ -347,7 +405,9 @@ login.addEventListener("submit", event => {
 
 
     const password =
-        document.getElementById("loginPassword").value;
+        document
+            .getElementById("loginPassword")
+            .value;
 
 
     const users = getUsers();
@@ -367,6 +427,7 @@ login.addEventListener("submit", event => {
             "Invalid username or password.";
 
         return;
+
     }
 
 
@@ -402,10 +463,9 @@ login.addEventListener("submit", event => {
 
 
         console.log(
-            "Logged in user:",
+            "Logged in:",
             user
         );
-
 
     }, 650);
 
@@ -413,7 +473,7 @@ login.addEventListener("submit", event => {
 
 
 /* =========================================================
-   CURRENT SESSION
+   CHECK EXISTING SESSION
 ========================================================= */
 
 const currentUser =
@@ -442,5 +502,3 @@ if (currentUser) {
     }
 
 }
-}
-```
