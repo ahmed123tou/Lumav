@@ -6,7 +6,8 @@
 
     <link
         rel="icon"
-        href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🌙</text></svg>"
+        type="image/svg+xml"
+        href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext x='50%25' y='70%25' text-anchor='middle' font-size='75'%3E🌙%3C/text%3E%3C/svg%3E"
     >
 
     <title>Luma — Login</title>
@@ -19,34 +20,44 @@
     <div class="background">
         <div class="glow glow-1"></div>
         <div class="glow glow-2"></div>
-        <div class="star-field"></div>
+        <div class="stars"></div>
     </div>
+
 
     <main class="auth-container">
 
         <section class="auth-card">
 
-            <!-- LUMA LOGO -->
+            <!-- BRAND -->
+
             <div class="brand">
                 <div class="brand-icon">✦</div>
                 <span>Luma</span>
             </div>
 
 
-            <!-- =========================
+            <!-- =================================================
                  LOGIN
-            ========================== -->
+            ================================================== -->
 
-            <div class="auth-form active" id="loginForm">
+            <div
+                class="auth-form active"
+                id="loginForm"
+            >
 
                 <div class="heading">
                     <h1>Welcome back!</h1>
-                    <p>We're so excited to see you again!</p>
+
+                    <p>
+                        We're so excited to see you again!
+                    </p>
                 </div>
+
 
                 <form id="login">
 
                     <!-- USERNAME -->
+
                     <div class="field">
 
                         <label for="loginUsername">
@@ -54,10 +65,11 @@
                         </label>
 
                         <input
-                            type="text"
                             id="loginUsername"
+                            type="text"
                             placeholder="Enter your username"
                             autocomplete="username"
+                            maxlength="24"
                             required
                         >
 
@@ -65,17 +77,18 @@
 
 
                     <!-- PASSWORD -->
+
                     <div class="field">
 
                         <label for="loginPassword">
                             PASSWORD <span>*</span>
                         </label>
 
-                        <div class="password-box">
+                        <div class="password-wrapper">
 
                             <input
-                                type="password"
                                 id="loginPassword"
+                                type="password"
                                 placeholder="Enter your password"
                                 autocomplete="current-password"
                                 required
@@ -88,7 +101,41 @@
                                 aria-label="Show password"
                                 title="Show password"
                             >
-                                👁
+
+                                <svg
+                                    class="eye-icon eye-open"
+                                    viewBox="0 0 24 24"
+                                >
+                                    <path
+                                        d="M2.5 12s3.5-6 9.5-6 9.5 6 9.5 6-3.5 6-9.5 6-9.5-6-9.5-6Z"
+                                    ></path>
+
+                                    <circle
+                                        cx="12"
+                                        cy="12"
+                                        r="2.8"
+                                    ></circle>
+                                </svg>
+
+                                <svg
+                                    class="eye-icon eye-closed"
+                                    viewBox="0 0 24 24"
+                                >
+                                    <path d="M3 3l18 18"></path>
+
+                                    <path
+                                        d="M10.6 6.2A9.9 9.9 0 0 1 12 6c6 0 9.5 6 9.5 6a18.7 18.7 0 0 1-3.1 3.7"
+                                    ></path>
+
+                                    <path
+                                        d="M6.1 8.1C3.7 9.9 2.5 12 2.5 12s3.5 6 9.5 6c1.1 0 2.1-.2 3-.5"
+                                    ></path>
+
+                                    <path
+                                        d="M9.9 9.9a3 3 0 0 0 4.2 4.2"
+                                    ></path>
+                                </svg>
+
                             </button>
 
                         </div>
@@ -96,16 +143,17 @@
                     </div>
 
 
-                    <!-- LOGIN BUTTON -->
                     <button
                         class="primary-btn"
                         type="submit"
                     >
+
                         <span class="btn-text">
                             Log In
                         </span>
 
                         <span class="loader"></span>
+
                     </button>
 
 
@@ -117,10 +165,11 @@
                 </form>
 
 
-                <!-- CREATE ACCOUNT -->
                 <div class="switch">
 
-                    <span>Don't have an account?</span>
+                    <span>
+                        Don't have an account?
+                    </span>
 
                     <button
                         type="button"
@@ -134,21 +183,31 @@
             </div>
 
 
-            <!-- =========================
-                 SIGNUP
-            ========================== -->
 
-            <div class="auth-form" id="signupForm">
+            <!-- =================================================
+                 SIGNUP
+            ================================================== -->
+
+            <div
+                class="auth-form"
+                id="signupForm"
+            >
 
                 <div class="heading">
+
                     <h1>Create an account</h1>
-                    <p>Join Luma and start hanging out.</p>
+
+                    <p>
+                        Join Luma and start hanging out.
+                    </p>
+
                 </div>
 
 
                 <form id="signup">
 
                     <!-- USERNAME -->
+
                     <div class="field">
 
                         <label for="signupUsername">
@@ -156,8 +215,8 @@
                         </label>
 
                         <input
-                            type="text"
                             id="signupUsername"
+                            type="text"
                             placeholder="Choose a username"
                             maxlength="24"
                             autocomplete="username"
@@ -165,13 +224,14 @@
                         >
 
                         <small>
-                            2–24 characters
+                            Letters, numbers, _ and - only
                         </small>
 
                     </div>
 
 
                     <!-- DISPLAY NAME -->
+
                     <div class="field">
 
                         <label for="displayName">
@@ -179,30 +239,36 @@
                         </label>
 
                         <input
-                            type="text"
                             id="displayName"
+                            type="text"
                             placeholder="Choose a display name"
                             maxlength="32"
                             required
                         >
 
+                        <small>
+                            You can use spaces and symbols
+                        </small>
+
                     </div>
 
 
                     <!-- PASSWORD -->
+
                     <div class="field">
 
                         <label for="signupPassword">
                             PASSWORD <span>*</span>
                         </label>
 
-                        <div class="password-box">
+                        <div class="password-wrapper">
 
                             <input
-                                type="password"
                                 id="signupPassword"
-                                placeholder="Create a password"
+                                type="password"
+                                placeholder="Letters and numbers only"
                                 autocomplete="new-password"
+                                maxlength="32"
                                 required
                             >
 
@@ -213,32 +279,80 @@
                                 aria-label="Show password"
                                 title="Show password"
                             >
-                                👁
+
+                                <svg
+                                    class="eye-icon eye-open"
+                                    viewBox="0 0 24 24"
+                                >
+                                    <path
+                                        d="M2.5 12s3.5-6 9.5-6 9.5 6 9.5 6-3.5 6-9.5 6-9.5-6-9.5-6Z"
+                                    ></path>
+
+                                    <circle
+                                        cx="12"
+                                        cy="12"
+                                        r="2.8"
+                                    ></circle>
+                                </svg>
+
+                                <svg
+                                    class="eye-icon eye-closed"
+                                    viewBox="0 0 24 24"
+                                >
+                                    <path d="M3 3l18 18"></path>
+
+                                    <path
+                                        d="M10.6 6.2A9.9 9.9 0 0 1 12 6c6 0 9.5 6 9.5 6a18.7 18.7 0 0 1-3.1 3.7"
+                                    ></path>
+
+                                    <path
+                                        d="M6.1 8.1C3.7 9.9 2.5 12 2.5 12s3.5 6 9.5 6c1.1 0 2.1-.2 3-.5"
+                                    ></path>
+
+                                    <path
+                                        d="M9.9 9.9a3 3 0 0 0 4.2 4.2"
+                                    ></path>
+                                </svg>
+
                             </button>
 
                         </div>
 
+
+                        <!-- GENERATE PASSWORD -->
+
+                        <button
+                            type="button"
+                            class="generate-password"
+                            id="generatePassword"
+                        >
+                            ✦ Generate random password
+                        </button>
+
+
                         <small>
-                            At least 6 characters
+                            6–32 letters and numbers only
                         </small>
 
                     </div>
 
 
                     <!-- CONFIRM PASSWORD -->
+
                     <div class="field">
 
                         <label for="confirmPassword">
                             CONFIRM PASSWORD <span>*</span>
                         </label>
 
-                        <div class="password-box">
+                        <div class="password-wrapper">
 
                             <input
-                                type="password"
                                 id="confirmPassword"
-                                placeholder="Confirm your password"
+                                type="password"
+                                placeholder="Enter your password again"
                                 autocomplete="new-password"
+                                maxlength="32"
                                 required
                             >
 
@@ -249,7 +363,41 @@
                                 aria-label="Show password"
                                 title="Show password"
                             >
-                                👁
+
+                                <svg
+                                    class="eye-icon eye-open"
+                                    viewBox="0 0 24 24"
+                                >
+                                    <path
+                                        d="M2.5 12s3.5-6 9.5-6 9.5 6 9.5 6-3.5 6-9.5 6-9.5-6-9.5-6Z"
+                                    ></path>
+
+                                    <circle
+                                        cx="12"
+                                        cy="12"
+                                        r="2.8"
+                                    ></circle>
+                                </svg>
+
+                                <svg
+                                    class="eye-icon eye-closed"
+                                    viewBox="0 0 24 24"
+                                >
+                                    <path d="M3 3l18 18"></path>
+
+                                    <path
+                                        d="M10.6 6.2A9.9 9.9 0 0 1 12 6c6 0 9.5 6 9.5 6a18.7 18.7 0 0 1-3.1 3.7"
+                                    ></path>
+
+                                    <path
+                                        d="M6.1 8.1C3.7 9.9 2.5 12 2.5 12s3.5 6 9.5 6c1.1 0 2.1-.2 3-.5"
+                                    ></path>
+
+                                    <path
+                                        d="M9.9 9.9a3 3 0 0 0 4.2 4.2"
+                                    ></path>
+                                </svg>
+
                             </button>
 
                         </div>
@@ -257,7 +405,6 @@
                     </div>
 
 
-                    <!-- CREATE ACCOUNT -->
                     <button
                         class="primary-btn"
                         type="submit"
@@ -280,10 +427,11 @@
                 </form>
 
 
-                <!-- BACK TO LOGIN -->
                 <div class="switch">
 
-                    <span>Already have an account?</span>
+                    <span>
+                        Already have an account?
+                    </span>
 
                     <button
                         type="button"
