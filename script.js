@@ -1,12 +1,10 @@
+```javascript
 /* =========================================================
-   LUMA — LOGIN + SIGNUP + FRIENDS UI
+   LUMA — LOGIN + SIGNUP + TEST CHAT
 ========================================================= */
 
 const USERS_KEY = "LUMA_USERS";
 const CURRENT_USER_KEY = "LUMA_CURRENT_USER";
-const FRIENDS_KEY = "LUMA_FRIENDS";
-const REQUESTS_KEY = "LUMA_FRIEND_REQUESTS";
-const MESSAGES_KEY = "LUMA_MESSAGES";
 
 
 /* =========================================================
@@ -40,83 +38,6 @@ const generatePassword =
 
 
 /* =========================================================
-   APP ELEMENTS
-========================================================= */
-
-const authContainer =
-    document.getElementById("authContainer");
-
-const lumaApp =
-    document.getElementById("lumaApp");
-
-const currentAvatar =
-    document.getElementById("currentAvatar");
-
-const currentDisplayName =
-    document.getElementById("currentDisplayName");
-
-const currentUsername =
-    document.getElementById("currentUsername");
-
-const friendsView =
-    document.getElementById("friendsView");
-
-const chatView =
-    document.getElementById("chatView");
-
-const emptyMain =
-    document.getElementById("emptyMain");
-
-const friendsList =
-    document.getElementById("friendsList");
-
-const friendSectionTitle =
-    document.getElementById("friendSectionTitle");
-
-const friendSectionDescription =
-    document.getElementById("friendSectionDescription");
-
-const pendingCount =
-    document.getElementById("pendingCount");
-
-const dmList =
-    document.getElementById("dmList");
-
-const profilePanel =
-    document.getElementById("profilePanel");
-
-const addFriendModal =
-    document.getElementById("addFriendModal");
-
-const friendUsernameInput =
-    document.getElementById("friendUsernameInput");
-
-const friendError =
-    document.getElementById("friendError");
-
-const messagesArea =
-    document.getElementById("messagesArea");
-
-const messageInput =
-    document.getElementById("messageInput");
-
-const chatName =
-    document.getElementById("chatName");
-
-const chatStatus =
-    document.getElementById("chatStatus");
-
-const chatAvatar =
-    document.getElementById("chatAvatar");
-
-const chatWelcomeAvatar =
-    document.getElementById("chatWelcomeAvatar");
-
-const chatWelcomeName =
-    document.getElementById("chatWelcomeName");
-
-
-/* =========================================================
    USERS
 ========================================================= */
 
@@ -143,6 +64,7 @@ function getUsers() {
         return [];
 
     }
+
 }
 
 
@@ -164,8 +86,7 @@ function showToast(message) {
 
     if (!toast) return;
 
-    toast.textContent =
-        message;
+    toast.textContent = message;
 
     toast.classList.add("show");
 
@@ -185,9 +106,11 @@ function showToast(message) {
 function openSignup() {
 
     loginForm.classList.remove("active");
+
     signupForm.classList.add("active");
 
     loginError.textContent = "";
+
     signupError.textContent = "";
 
     document.title =
@@ -199,9 +122,11 @@ function openSignup() {
 function openLogin() {
 
     signupForm.classList.remove("active");
+
     loginForm.classList.add("active");
 
     loginError.textContent = "";
+
     signupError.textContent = "";
 
     document.title =
@@ -224,6 +149,10 @@ showLogin.addEventListener(
 
 /* =========================================================
    PASSWORD SHOW / HIDE
+   IMPORTANT:
+   Uses your current HTML:
+   .password-toggle
+   data-target="passwordInput"
 ========================================================= */
 
 function setupPasswordButtons() {
@@ -245,55 +174,98 @@ function setupPasswordButtons() {
                         "data-target"
                     );
 
+
                 const input =
                     document.getElementById(
                         target
                     );
 
-                if (!input) return;
+
+                if (!input) {
+                    return;
+                }
 
 
-                const showing =
-                    input.type === "text";
+                const hidden =
+                    input.type === "password";
 
 
-                if (showing) {
+                if (hidden) {
 
-                    input.type =
-                        "password";
-
-                    this.classList.remove(
-                        "showing"
-                    );
+                    input.type = "text";
 
                     this.setAttribute(
                         "aria-label",
-                        "Show password"
+                        "Hide password"
                     );
 
                     this.setAttribute(
                         "title",
-                        "Show password"
+                        "Hide password"
                     );
-
-                } else {
-
-                    input.type =
-                        "text";
 
                     this.classList.add(
                         "showing"
                     );
 
+                    const openEye =
+                        this.querySelector(
+                            ".eye-open"
+                        );
+
+                    const closedEye =
+                        this.querySelector(
+                            ".eye-closed"
+                        );
+
+                    if (openEye) {
+                        openEye.style.display =
+                            "none";
+                    }
+
+                    if (closedEye) {
+                        closedEye.style.display =
+                            "block";
+                    }
+
+                } else {
+
+                    input.type =
+                        "password";
+
                     this.setAttribute(
                         "aria-label",
-                        "Hide password"
+                        "Show password"
                     );
 
                     this.setAttribute(
                         "title",
-                        "Hide password"
+                        "Show password"
                     );
+
+                    this.classList.remove(
+                        "showing"
+                    );
+
+                    const openEye =
+                        this.querySelector(
+                            ".eye-open"
+                        );
+
+                    const closedEye =
+                        this.querySelector(
+                            ".eye-closed"
+                        );
+
+                    if (openEye) {
+                        openEye.style.display =
+                            "block";
+                    }
+
+                    if (closedEye) {
+                        closedEye.style.display =
+                            "none";
+                    }
 
                 }
 
@@ -309,7 +281,7 @@ setupPasswordButtons();
 
 
 /* =========================================================
-   VALIDATION
+   USERNAME RULE
 ========================================================= */
 
 function validUsername(username) {
@@ -321,6 +293,10 @@ function validUsername(username) {
 }
 
 
+/* =========================================================
+   PASSWORD RULE
+========================================================= */
+
 function validPassword(password) {
 
     return /^[A-Za-z0-9]{6,32}$/.test(
@@ -329,6 +305,10 @@ function validPassword(password) {
 
 }
 
+
+/* =========================================================
+   DISPLAY NAME RULE
+========================================================= */
 
 function validDisplayName(name) {
 
@@ -341,7 +321,7 @@ function validDisplayName(name) {
 
 
 /* =========================================================
-   LIVE FILTERS
+   USERNAME LIVE FILTER
 ========================================================= */
 
 signupUsername.addEventListener(
@@ -357,6 +337,10 @@ signupUsername.addEventListener(
     }
 );
 
+
+/* =========================================================
+   PASSWORD LIVE FILTER
+========================================================= */
 
 signupPassword.addEventListener(
     "input",
@@ -406,6 +390,7 @@ function generateRandomPassword(
         randomValues
     );
 
+
     for (
         let i = 0;
         i < length;
@@ -420,10 +405,15 @@ function generateRandomPassword(
 
     }
 
+
     return password;
 
 }
 
+
+/* =========================================================
+   GENERATE PASSWORD
+========================================================= */
 
 generatePassword.addEventListener(
     "click",
@@ -432,11 +422,13 @@ generatePassword.addEventListener(
         const password =
             generateRandomPassword(12);
 
+
         signupPassword.value =
             password;
 
         confirmPassword.value =
             password;
+
 
         signupPassword.type =
             "text";
@@ -455,6 +447,7 @@ generatePassword.addEventListener(
                     button.getAttribute(
                         "data-target"
                     );
+
 
                 if (
                     id === "signupPassword" ||
@@ -475,6 +468,28 @@ generatePassword.addEventListener(
                         "Hide password"
                     );
 
+
+                    const openEye =
+                        button.querySelector(
+                            ".eye-open"
+                        );
+
+                    const closedEye =
+                        button.querySelector(
+                            ".eye-closed"
+                        );
+
+
+                    if (openEye) {
+                        openEye.style.display =
+                            "none";
+                    }
+
+                    if (closedEye) {
+                        closedEye.style.display =
+                            "block";
+                    }
+
                 }
 
             });
@@ -483,8 +498,12 @@ generatePassword.addEventListener(
         const oldHTML =
             this.innerHTML;
 
-        this.innerHTML =
-            "✓ Password generated!";
+
+        this.innerHTML = `
+            <span class="generate-icon">✓</span>
+            <span>Password generated!</span>
+        `;
+
 
         showToast(
             "Random password generated!"
@@ -512,13 +531,14 @@ signup.addEventListener(
 
         event.preventDefault();
 
-        signupError.textContent =
-            "";
+        signupError.textContent = "";
+
 
         const button =
             signup.querySelector(
                 ".primary-btn"
             );
+
 
         const username =
             signupUsername.value.trim();
@@ -599,8 +619,7 @@ signup.addEventListener(
             "loading"
         );
 
-        button.disabled =
-            true;
+        button.disabled = true;
 
 
         setTimeout(() => {
@@ -622,13 +641,7 @@ signup.addEventListener(
                     password,
 
                 createdAt:
-                    new Date().toISOString(),
-
-                avatar:
-                    null,
-
-                discord:
-                    null
+                    new Date().toISOString()
 
             };
 
@@ -636,6 +649,7 @@ signup.addEventListener(
             users.push(
                 newUser
             );
+
 
             saveUsers(
                 users
@@ -656,8 +670,7 @@ signup.addEventListener(
                 "loading"
             );
 
-            button.disabled =
-                false;
+            button.disabled = false;
 
 
             openLogin();
@@ -690,13 +703,14 @@ login.addEventListener(
 
         event.preventDefault();
 
-        loginError.textContent =
-            "";
+        loginError.textContent = "";
+
 
         const button =
             login.querySelector(
                 ".primary-btn"
             );
+
 
         const username =
             loginUsername.value.trim();
@@ -733,8 +747,7 @@ login.addEventListener(
             "loading"
         );
 
-        button.disabled =
-            true;
+        button.disabled = true;
 
 
         setTimeout(() => {
@@ -748,13 +761,7 @@ login.addEventListener(
                     user.username,
 
                 displayName:
-                    user.displayName,
-
-                avatar:
-                    user.avatar || null,
-
-                discord:
-                    user.discord || null
+                    user.displayName
 
             };
 
@@ -769,11 +776,25 @@ login.addEventListener(
                 "loading"
             );
 
-            button.disabled =
-                false;
+            button.disabled = false;
 
 
-            enterLuma(
+            showToast(
+                `Welcome back, ${user.displayName}!`
+            );
+
+
+            console.log(
+                "Luma logged in:",
+                session
+            );
+
+
+            /* =====================================
+               OPEN LUMA APP
+            ===================================== */
+
+            openLumaApp(
                 session
             );
 
@@ -781,1932 +802,6 @@ login.addEventListener(
 
     }
 );
-
-
-/* =========================================================
-   SESSION
-========================================================= */
-
-function getCurrentUser() {
-
-    try {
-
-        const saved =
-            localStorage.getItem(
-                CURRENT_USER_KEY
-            );
-
-        if (!saved) return null;
-
-        return JSON.parse(saved);
-
-    } catch {
-
-        return null;
-
-    }
-
-}
-
-
-/* =========================================================
-   ENTER LUMA
-========================================================= */
-
-function enterLuma(user) {
-
-    if (!user) return;
-
-
-    authContainer.style.display =
-        "none";
-
-    lumaApp.classList.add(
-        "active"
-    );
-
-
-    currentDisplayName.textContent =
-        user.displayName ||
-        user.username;
-
-    currentUsername.textContent =
-        "@" + user.username;
-
-
-    setAvatar(
-        currentAvatar,
-        user
-    );
-
-
-    document.title =
-        "Luma";
-
-
-    showFriends();
-
-}
-
-
-/* =========================================================
-   AVATAR
-========================================================= */
-
-function setAvatar(element, user) {
-
-    if (!element) return;
-
-
-    if (user.avatar) {
-
-        element.innerHTML =
-            `<img src="${user.avatar}" alt="">`;
-
-        element.style.background =
-            "transparent";
-
-        const image =
-            element.querySelector("img");
-
-        image.style.width =
-            "100%";
-
-        image.style.height =
-            "100%";
-
-        image.style.objectFit =
-            "cover";
-
-        image.style.borderRadius =
-            "50%";
-
-        return;
-
-    }
-
-
-    const name =
-        user.displayName ||
-        user.username ||
-        "?";
-
-    element.textContent =
-        name.charAt(0).toUpperCase();
-
-}
-
-
-/* =========================================================
-   FRIEND DATA
-========================================================= */
-
-function getFriends() {
-
-    try {
-
-        return JSON.parse(
-            localStorage.getItem(
-                FRIENDS_KEY
-            )
-        ) || {};
-
-    } catch {
-
-        return {};
-
-    }
-
-}
-
-
-function saveFriends(data) {
-
-    localStorage.setItem(
-        FRIENDS_KEY,
-        JSON.stringify(data)
-    );
-
-}
-
-
-function getRequests() {
-
-    try {
-
-        return JSON.parse(
-            localStorage.getItem(
-                REQUESTS_KEY
-            )
-        ) || [];
-
-    } catch {
-
-        return [];
-
-    }
-
-}
-
-
-function saveRequests(data) {
-
-    localStorage.setItem(
-        REQUESTS_KEY,
-        JSON.stringify(data)
-    );
-
-}
-
-
-function getMessages() {
-
-    try {
-
-        return JSON.parse(
-            localStorage.getItem(
-                MESSAGES_KEY
-            )
-        ) || {};
-
-    } catch {
-
-        return {};
-
-    }
-
-}
-
-
-function saveMessages(data) {
-
-    localStorage.setItem(
-        MESSAGES_KEY,
-        JSON.stringify(data)
-    );
-
-}
-
-
-/* =========================================================
-   CURRENT USER FRIENDS
-========================================================= */
-
-function getMyFriends() {
-
-    const user =
-        getCurrentUser();
-
-    if (!user) return [];
-
-    const friends =
-        getFriends();
-
-    return friends[user.id] || [];
-
-}
-
-
-/* =========================================================
-   FIND USER
-========================================================= */
-
-function findUser(username) {
-
-    return getUsers().find(
-        user =>
-            user.username.toLowerCase() ===
-            username.trim().toLowerCase()
-    );
-
-}
-
-
-/* =========================================================
-   FRIENDS VIEW
-========================================================= */
-
-function showFriends() {
-
-    friendsView.style.display =
-        "flex";
-
-    chatView.classList.add(
-        "hidden"
-    );
-
-    emptyMain.classList.add(
-        "hidden"
-    );
-
-    profilePanel.classList.add(
-        "hidden"
-    );
-
-    document
-        .querySelectorAll(".friend-tab")
-        .forEach(tab => {
-
-            tab.classList.remove(
-                "active"
-            );
-
-            if (
-                tab.dataset.tab ===
-                "all"
-            ) {
-
-                tab.classList.add(
-                    "active"
-                );
-
-            }
-
-        });
-
-
-    renderFriends(
-        "all"
-    );
-
-}
-
-
-/* =========================================================
-   RENDER FRIENDS
-========================================================= */
-
-function renderFriends(tab) {
-
-    const user =
-        getCurrentUser();
-
-    if (!user) return;
-
-
-    const friendIds =
-        getMyFriends();
-
-
-    let friends =
-        friendIds
-            .map(id =>
-                getUsers().find(
-                    account =>
-                        account.id === id
-                )
-            )
-            .filter(Boolean);
-
-
-    if (tab === "online") {
-
-        friends =
-            friends.filter(
-                friend =>
-                    friend.online
-            );
-
-        friendSectionTitle.textContent =
-            "Online";
-
-        friendSectionDescription.textContent =
-            "Friends who are currently online.";
-
-    } else if (tab === "pending") {
-
-        renderPending();
-
-        return;
-
-    } else if (tab === "blocked") {
-
-        friendSectionTitle.textContent =
-            "Blocked";
-
-        friendSectionDescription.textContent =
-            "People you've blocked.";
-
-        renderEmptyTab(
-            "No blocked users"
-        );
-
-        return;
-
-    } else {
-
-        friendSectionTitle.textContent =
-            "All Friends";
-
-        friendSectionDescription.textContent =
-            "Everyone on your friends list.";
-
-    }
-
-
-    friendsList.innerHTML =
-        "";
-
-
-    if (!friends.length) {
-
-        friendsList.innerHTML = `
-            <div class="no-friends">
-                <div class="no-friends-icon">👥</div>
-                <h2>
-                    ${tab === "online"
-                        ? "Nobody is online"
-                        : "It's quiet here..."}
-                </h2>
-                <p>
-                    ${tab === "online"
-                        ? "Your online friends will appear here."
-                        : "Add someone to your friends list and start hanging out."}
-                </p>
-                <button id="emptyAddFriend">
-                    Add Friend
-                </button>
-            </div>
-        `;
-
-
-        const button =
-            document.getElementById(
-                "emptyAddFriend"
-            );
-
-        if (button) {
-
-            button.addEventListener(
-                "click",
-                openAddFriend
-            );
-
-        }
-
-        return;
-
-    }
-
-
-    friends.forEach(friend => {
-
-        const card =
-            document.createElement(
-                "div"
-            );
-
-        card.className =
-            "friend-card";
-
-
-        card.innerHTML = `
-
-            <div class="friend-avatar">
-                ${getInitial(friend)}
-            </div>
-
-            <div class="friend-info">
-
-                <strong>
-                    ${escapeHTML(
-                        friend.displayName
-                    )}
-                </strong>
-
-                <span>
-                    ${friend.online
-                        ? "● Online"
-                        : "Offline"}
-                </span>
-
-            </div>
-
-            <div class="friend-actions">
-
-                <button
-                    class="friend-action message-friend"
-                    title="Message"
-                >
-                    💬
-                </button>
-
-            </div>
-
-        `;
-
-
-        card
-            .querySelector(
-                ".message-friend"
-            )
-            .addEventListener(
-                "click",
-                event => {
-
-                    event.stopPropagation();
-
-                    openChat(
-                        friend
-                    );
-
-                }
-            );
-
-
-        card.addEventListener(
-            "click",
-            () => {
-
-                openChat(
-                    friend
-                );
-
-            }
-        );
-
-
-        friendsList.appendChild(
-            card
-        );
-
-    });
-
-}
-
-
-/* =========================================================
-   PENDING
-========================================================= */
-
-function renderPending() {
-
-    friendSectionTitle.textContent =
-        "Pending";
-
-    friendSectionDescription.textContent =
-        "Friend requests waiting for a response.";
-
-
-    const user =
-        getCurrentUser();
-
-    const requests =
-        getRequests();
-
-
-    const incoming =
-        requests.filter(
-            request =>
-                request.to === user.id &&
-                request.status === "pending"
-        );
-
-
-    friendsList.innerHTML =
-        "";
-
-
-    pendingCount.textContent =
-        incoming.length;
-
-
-    if (!incoming.length) {
-
-        renderEmptyTab(
-            "No pending requests"
-        );
-
-        return;
-
-    }
-
-
-    incoming.forEach(request => {
-
-        const sender =
-            getUsers().find(
-                account =>
-                    account.id ===
-                    request.from
-            );
-
-        if (!sender) return;
-
-
-        const card =
-            document.createElement(
-                "div"
-            );
-
-        card.className =
-            "friend-card";
-
-
-        card.innerHTML = `
-
-            <div class="friend-avatar">
-                ${getInitial(sender)}
-            </div>
-
-            <div class="friend-info">
-
-                <strong>
-                    ${escapeHTML(
-                        sender.displayName
-                    )}
-                </strong>
-
-                <span>
-                    @${escapeHTML(
-                        sender.username
-                    )}
-                </span>
-
-            </div>
-
-            <div class="friend-actions">
-
-                <button
-                    class="friend-action accept-request"
-                    title="Accept"
-                >
-                    ✓
-                </button>
-
-                <button
-                    class="friend-action decline-request"
-                    title="Decline"
-                >
-                    ×
-                </button>
-
-            </div>
-
-        `;
-
-
-        card
-            .querySelector(
-                ".accept-request"
-            )
-            .addEventListener(
-                "click",
-                () => {
-
-                    acceptRequest(
-                        request.id
-                    );
-
-                }
-            );
-
-
-        card
-            .querySelector(
-                ".decline-request"
-            )
-            .addEventListener(
-                "click",
-                () => {
-
-                    declineRequest(
-                        request.id
-                    );
-
-                }
-            );
-
-
-        friendsList.appendChild(
-            card
-        );
-
-    });
-
-}
-
-
-/* =========================================================
-   EMPTY TAB
-========================================================= */
-
-function renderEmptyTab(title) {
-
-    friendsList.innerHTML = `
-
-        <div class="no-friends">
-
-            <div class="no-friends-icon">
-                ✓
-            </div>
-
-            <h2>
-                ${title}
-            </h2>
-
-            <p>
-                Nothing to show here right now.
-            </p>
-
-        </div>
-
-    `;
-
-}
-
-
-/* =========================================================
-   ADD FRIEND
-========================================================= */
-
-function openAddFriend() {
-
-    addFriendModal.classList.add(
-        "active"
-    );
-
-    friendUsernameInput.value =
-        "";
-
-    friendError.textContent =
-        "";
-
-    setTimeout(() => {
-
-        friendUsernameInput.focus();
-
-    }, 50);
-
-}
-
-
-function closeAddFriend() {
-
-    addFriendModal.classList.remove(
-        "active"
-    );
-
-}
-
-
-document
-    .getElementById(
-        "addFriendButton"
-    )
-    .addEventListener(
-        "click",
-        openAddFriend
-    );
-
-
-document
-    .getElementById(
-        "emptyAddFriend"
-    )
-    .addEventListener(
-        "click",
-        openAddFriend
-    );
-
-
-document
-    .getElementById(
-        "closeAddFriend"
-    )
-    .addEventListener(
-        "click",
-        closeAddFriend
-    );
-
-
-addFriendModal.addEventListener(
-    "click",
-    event => {
-
-        if (
-            event.target ===
-            addFriendModal
-        ) {
-
-            closeAddFriend();
-
-        }
-
-    }
-);
-
-
-/* =========================================================
-   SEND FRIEND REQUEST
-========================================================= */
-
-document
-    .getElementById(
-        "addFriendForm"
-    )
-    .addEventListener(
-        "submit",
-        event => {
-
-            event.preventDefault();
-
-            friendError.textContent =
-                "";
-
-            const me =
-                getCurrentUser();
-
-            const target =
-                findUser(
-                    friendUsernameInput.value
-                );
-
-
-            if (!target) {
-
-                friendError.textContent =
-                    "No Luma user with that username was found.";
-
-                return;
-
-            }
-
-
-            if (
-                target.id ===
-                me.id
-            ) {
-
-                friendError.textContent =
-                    "You can't add yourself.";
-
-                return;
-
-            }
-
-
-            const friends =
-                getMyFriends();
-
-
-            if (
-                friends.includes(
-                    target.id
-                )
-            ) {
-
-                friendError.textContent =
-                    "You're already friends.";
-
-                return;
-
-            }
-
-
-            const requests =
-                getRequests();
-
-
-            const existing =
-                requests.find(
-                    request =>
-                        request.status === "pending" &&
-                        (
-                            (
-                                request.from === me.id &&
-                                request.to === target.id
-                            ) ||
-                            (
-                                request.from === target.id &&
-                                request.to === me.id
-                            )
-                        )
-                );
-
-
-            if (existing) {
-
-                friendError.textContent =
-                    "A friend request already exists.";
-
-                return;
-
-            }
-
-
-            requests.push({
-
-                id:
-                    crypto.randomUUID(),
-
-                from:
-                    me.id,
-
-                to:
-                    target.id,
-
-                status:
-                    "pending",
-
-                createdAt:
-                    new Date().toISOString()
-
-            });
-
-
-            saveRequests(
-                requests
-            );
-
-
-            closeAddFriend();
-
-
-            showToast(
-                `Friend request sent to ${target.username}.`
-            );
-
-        }
-    );
-
-
-/* =========================================================
-   ACCEPT REQUEST
-========================================================= */
-
-function acceptRequest(requestId) {
-
-    const me =
-        getCurrentUser();
-
-    const requests =
-        getRequests();
-
-    const request =
-        requests.find(
-            item =>
-                item.id ===
-                requestId
-        );
-
-
-    if (!request) return;
-
-
-    const friends =
-        getFriends();
-
-
-    if (!friends[me.id]) {
-        friends[me.id] = [];
-    }
-
-    if (!friends[request.from]) {
-        friends[request.from] = [];
-    }
-
-
-    if (
-        !friends[me.id].includes(
-            request.from
-        )
-    ) {
-
-        friends[me.id].push(
-            request.from
-        );
-
-    }
-
-
-    if (
-        !friends[request.from].includes(
-            me.id
-        )
-    ) {
-
-        friends[request.from].push(
-            me.id
-        );
-
-    }
-
-
-    request.status =
-        "accepted";
-
-
-    saveFriends(
-        friends
-    );
-
-    saveRequests(
-        requests
-    );
-
-
-    showToast(
-        "Friend request accepted!"
-    );
-
-
-    renderFriends(
-        "pending"
-    );
-
-    renderDMList();
-
-}
-
-
-/* =========================================================
-   DECLINE
-========================================================= */
-
-function declineRequest(requestId) {
-
-    const requests =
-        getRequests();
-
-
-    const request =
-        requests.find(
-            item =>
-                item.id ===
-                requestId
-        );
-
-
-    if (!request) return;
-
-
-    request.status =
-        "declined";
-
-
-    saveRequests(
-        requests
-    );
-
-
-    showToast(
-        "Friend request declined."
-    );
-
-
-    renderFriends(
-        "pending"
-    );
-
-}
-
-
-/* =========================================================
-   DM LIST
-========================================================= */
-
-function renderDMList() {
-
-    const friendIds =
-        getMyFriends();
-
-
-    dmList.innerHTML =
-        "";
-
-
-    if (!friendIds.length) {
-
-        dmList.innerHTML = `
-
-            <div class="empty-dms">
-
-                <div>💬</div>
-
-                <span>
-                    No conversations yet
-                </span>
-
-                <small>
-                    Add a friend to start chatting.
-                </small>
-
-            </div>
-
-        `;
-
-        return;
-
-    }
-
-
-    friendIds.forEach(id => {
-
-        const friend =
-            getUsers().find(
-                user =>
-                    user.id === id
-            );
-
-        if (!friend) return;
-
-
-        const item =
-            document.createElement(
-                "button"
-            );
-
-        item.className =
-            "friend-card";
-
-        item.style.width =
-            "100%";
-
-        item.style.border =
-            "none";
-
-        item.style.background =
-            "transparent";
-
-
-        item.innerHTML = `
-
-            <div class="friend-avatar">
-                ${getInitial(friend)}
-            </div>
-
-            <div class="friend-info">
-
-                <strong>
-                    ${escapeHTML(
-                        friend.displayName
-                    )}
-                </strong>
-
-                <span>
-                    ${friend.online
-                        ? "Online"
-                        : "Offline"}
-                </span>
-
-            </div>
-
-        `;
-
-
-        item.addEventListener(
-            "click",
-            () => {
-
-                openChat(
-                    friend
-                );
-
-            }
-        );
-
-
-        dmList.appendChild(
-            item
-        );
-
-    });
-
-}
-
-
-/* =========================================================
-   OPEN CHAT
-========================================================= */
-
-function openChat(friend) {
-
-    friendsView.style.display =
-        "none";
-
-    emptyMain.classList.add(
-        "hidden"
-    );
-
-    chatView.classList.remove(
-        "hidden"
-    );
-
-
-    chatName.textContent =
-        friend.displayName;
-
-    chatStatus.textContent =
-        friend.online
-            ? "Online"
-            : "Offline";
-
-
-    setAvatar(
-        chatAvatar,
-        friend
-    );
-
-    setAvatar(
-        chatWelcomeAvatar,
-        friend
-    );
-
-
-    chatWelcomeName.textContent =
-        friend.displayName;
-
-
-    renderMessages(
-        friend.id
-    );
-
-
-    messageInput.focus();
-
-}
-
-
-/* =========================================================
-   SEND MESSAGE
-========================================================= */
-
-function sendMessage() {
-
-    const text =
-        messageInput.value.trim();
-
-    const me =
-        getCurrentUser();
-
-    const friendName =
-        chatName.textContent;
-
-
-    if (!text || !me) return;
-
-
-    const friend =
-        getUsers().find(
-            user =>
-                user.displayName ===
-                friendName
-        );
-
-
-    if (!friend) return;
-
-
-    const messages =
-        getMessages();
-
-
-    const conversationId =
-        getConversationId(
-            me.id,
-            friend.id
-        );
-
-
-    if (!messages[conversationId]) {
-        messages[conversationId] = [];
-    }
-
-
-    messages[conversationId].push({
-
-        id:
-            crypto.randomUUID(),
-
-        author:
-            me.id,
-
-        text:
-            text,
-
-        createdAt:
-            new Date().toISOString()
-
-    });
-
-
-    saveMessages(
-        messages
-    );
-
-
-    messageInput.value =
-        "";
-
-    autoResizeMessageBox();
-
-
-    renderMessages(
-        friend.id
-    );
-
-}
-
-
-document
-    .getElementById(
-        "sendButton"
-    )
-    .addEventListener(
-        "click",
-        sendMessage
-    );
-
-
-messageInput.addEventListener(
-    "keydown",
-    event => {
-
-        if (
-            event.key === "Enter" &&
-            !event.shiftKey
-        ) {
-
-            event.preventDefault();
-
-            sendMessage();
-
-        }
-
-    }
-);
-
-
-/* =========================================================
-   MESSAGE RENDER
-========================================================= */
-
-function renderMessages(friendId) {
-
-    const me =
-        getCurrentUser();
-
-    const messages =
-        getMessages();
-
-
-    const conversationId =
-        getConversationId(
-            me.id,
-            friendId
-        );
-
-
-    const conversation =
-        messages[conversationId] || [];
-
-
-    const friend =
-        getUsers().find(
-            user =>
-                user.id === friendId
-        );
-
-
-    if (!conversation.length) {
-
-        messagesArea.innerHTML = `
-
-            <div class="chat-welcome">
-
-                <div class="chat-welcome-avatar">
-                    ${getInitial(friend)}
-                </div>
-
-                <h1>
-                    ${escapeHTML(
-                        friend.displayName
-                    )}
-                </h1>
-
-                <p>
-                    This is the beginning of your
-                    direct message history.
-                </p>
-
-            </div>
-
-        `;
-
-        return;
-
-    }
-
-
-    messagesArea.innerHTML =
-        "";
-
-
-    conversation.forEach(message => {
-
-        const author =
-            getUsers().find(
-                user =>
-                    user.id ===
-                    message.author
-            );
-
-
-        if (!author) return;
-
-
-        const item =
-            document.createElement(
-                "div"
-            );
-
-        item.className =
-            "message";
-
-
-        const time =
-            new Date(
-                message.createdAt
-            ).toLocaleTimeString(
-                [],
-                {
-                    hour: "2-digit",
-                    minute: "2-digit"
-                }
-            );
-
-
-        item.innerHTML = `
-
-            <div class="message-avatar">
-                ${getInitial(author)}
-            </div>
-
-            <div class="message-body">
-
-                <div>
-
-                    <span class="message-author">
-                        ${escapeHTML(
-                            author.displayName
-                        )}
-                    </span>
-
-                    <span class="message-time">
-                        ${time}
-                    </span>
-
-                </div>
-
-                <div class="message-text">
-                    ${escapeHTML(
-                        message.text
-                    )}
-                </div>
-
-            </div>
-
-        `;
-
-
-        messagesArea.appendChild(
-            item
-        );
-
-    });
-
-
-    messagesArea.scrollTop =
-        messagesArea.scrollHeight;
-
-}
-
-
-/* =========================================================
-   CONVERSATION ID
-========================================================= */
-
-function getConversationId(
-    first,
-    second
-) {
-
-    return [
-        first,
-        second
-    ]
-        .sort()
-        .join("_");
-
-}
-
-
-/* =========================================================
-   TABS
-========================================================= */
-
-document
-    .querySelectorAll(
-        ".friend-tab"
-    )
-    .forEach(tab => {
-
-        tab.addEventListener(
-            "click",
-            () => {
-
-                document
-                    .querySelectorAll(
-                        ".friend-tab"
-                    )
-                    .forEach(item => {
-
-                        item.classList.remove(
-                            "active"
-                        );
-
-                    });
-
-
-                tab.classList.add(
-                    "active"
-                );
-
-
-                renderFriends(
-                    tab.dataset.tab
-                );
-
-            }
-        );
-
-    });
-
-
-/* =========================================================
-   FRIENDS BUTTON
-========================================================= */
-
-document
-    .getElementById(
-        "friendsButton"
-    )
-    .addEventListener(
-        "click",
-        () => {
-
-            showFriends();
-
-            renderDMList();
-
-        }
-    );
-
-
-document
-    .getElementById(
-        "homeButton"
-    )
-    .addEventListener(
-        "click",
-        () => {
-
-            showFriends();
-
-        }
-    );
-
-
-/* =========================================================
-   PROFILE
-========================================================= */
-
-function openProfile() {
-
-    const user =
-        getCurrentUser();
-
-    if (!user) return;
-
-
-    profilePanel.classList.remove(
-        "hidden"
-    );
-
-
-    setAvatar(
-        document.getElementById(
-            "profileAvatar"
-        ),
-        user
-    );
-
-
-    document.getElementById(
-        "profileDisplayName"
-    ).textContent =
-        user.displayName;
-
-
-    document.getElementById(
-        "profileUsername"
-    ).textContent =
-        "@" + user.username;
-
-
-    document.getElementById(
-        "profileUsernameFull"
-    ).textContent =
-        user.username;
-
-}
-
-
-document
-    .getElementById(
-        "profileButton"
-    )
-    .addEventListener(
-        "click",
-        openProfile
-    );
-
-
-document
-    .getElementById(
-        "profileClose"
-    )
-    .addEventListener(
-        "click",
-        () => {
-
-            profilePanel.classList.add(
-                "hidden"
-            );
-
-        }
-    );
-
-
-document
-    .getElementById(
-        "settingsButton"
-    )
-    .addEventListener(
-        "click",
-        () => {
-
-            showToast(
-                "Settings are coming next."
-            );
-
-        }
-    );
-
-
-/* =========================================================
-   LOGOUT
-========================================================= */
-
-document
-    .getElementById(
-        "logoutButton"
-    )
-    .addEventListener(
-        "click",
-        () => {
-
-            localStorage.removeItem(
-                CURRENT_USER_KEY
-            );
-
-            lumaApp.classList.remove(
-                "active"
-            );
-
-            authContainer.style.display =
-                "flex";
-
-            openLogin();
-
-            document.title =
-                "Luma — Login";
-
-        }
-    );
-
-
-/* =========================================================
-   SEARCH DMS
-========================================================= */
-
-document
-    .getElementById(
-        "dmSearch"
-    )
-    .addEventListener(
-        "input",
-        function () {
-
-            const query =
-                this.value
-                    .trim()
-                    .toLowerCase();
-
-
-            const friendIds =
-                getMyFriends();
-
-
-            const matches =
-                friendIds
-                    .map(id =>
-                        getUsers().find(
-                            user =>
-                                user.id === id
-                        )
-                    )
-                    .filter(Boolean)
-                    .filter(user =>
-                        user.username
-                            .toLowerCase()
-                            .includes(query) ||
-                        user.displayName
-                            .toLowerCase()
-                            .includes(query)
-                    );
-
-
-            dmList.innerHTML =
-                "";
-
-
-            matches.forEach(friend => {
-
-                const item =
-                    document.createElement(
-                        "button"
-                    );
-
-                item.className =
-                    "friend-card";
-
-                item.style.width =
-                    "100%";
-
-                item.style.border =
-                    "none";
-
-                item.innerHTML = `
-
-                    <div class="friend-avatar">
-                        ${getInitial(friend)}
-                    </div>
-
-                    <div class="friend-info">
-
-                        <strong>
-                            ${escapeHTML(
-                                friend.displayName
-                            )}
-                        </strong>
-
-                        <span>
-                            @${escapeHTML(
-                                friend.username
-                            )}
-                        </span>
-
-                    </div>
-
-                `;
-
-
-                item.addEventListener(
-                    "click",
-                    () => {
-
-                        openChat(
-                            friend
-                        );
-
-                    }
-                );
-
-
-                dmList.appendChild(
-                    item
-                );
-
-            });
-
-        }
-    );
-
-
-/* =========================================================
-   CHAT PROFILE
-========================================================= */
-
-document
-    .getElementById(
-        "chatProfileButton"
-    )
-    .addEventListener(
-        "click",
-        () => {
-
-            const name =
-                chatName.textContent;
-
-            const friend =
-                getUsers().find(
-                    user =>
-                        user.displayName ===
-                        name
-                );
-
-            if (!friend) return;
-
-
-            profilePanel.classList.remove(
-                "hidden"
-            );
-
-
-            setAvatar(
-                document.getElementById(
-                    "profileAvatar"
-                ),
-                friend
-            );
-
-
-            document.getElementById(
-                "profileDisplayName"
-            ).textContent =
-                friend.displayName;
-
-
-            document.getElementById(
-                "profileUsername"
-            ).textContent =
-                "@" + friend.username;
-
-
-            document.getElementById(
-                "profileUsernameFull"
-            ).textContent =
-                friend.username;
-
-        }
-    );
-
-
-/* =========================================================
-   MESSAGE BOX
-========================================================= */
-
-function autoResizeMessageBox() {
-
-    messageInput.style.height =
-        "auto";
-
-    messageInput.style.height =
-        Math.min(
-            messageInput.scrollHeight,
-            150
-        ) + "px";
-
-}
-
-
-messageInput.addEventListener(
-    "input",
-    autoResizeMessageBox
-);
-
-
-/* =========================================================
-   HELPERS
-========================================================= */
-
-function getInitial(user) {
-
-    if (!user) return "?";
-
-    return (
-        user.displayName ||
-        user.username ||
-        "?"
-    )
-        .charAt(0)
-        .toUpperCase();
-
-}
-
-
-function escapeHTML(value) {
-
-    return String(value)
-        .replaceAll("&", "&amp;")
-        .replaceAll("<", "&lt;")
-        .replaceAll(">", "&gt;")
-        .replaceAll('"', "&quot;")
-        .replaceAll("'", "&#039;");
-
-}
-
-
-/* =========================================================
-   DISCORD OAUTH
-========================================================= */
-
-const DISCORD_OAUTH_URL =
-    "https://luma-backend-w8gq.onrender.com/auth/discord";
-
-
-const discordLogin =
-    document.getElementById(
-        "discordLogin"
-    );
-
-
-const discordLoginSignup =
-    document.getElementById(
-        "discordLoginSignup"
-    );
-
-
-if (discordLogin) {
-
-    discordLogin.addEventListener(
-        "click",
-        () => {
-
-            window.location.href =
-                DISCORD_OAUTH_URL;
-
-        }
-    );
-
-}
-
-
-if (discordLoginSignup) {
-
-    discordLoginSignup.addEventListener(
-        "click",
-        () => {
-
-            window.location.href =
-                DISCORD_OAUTH_URL;
-
-        }
-    );
-
-}
 
 
 /* =========================================================
@@ -2728,7 +823,8 @@ if (existingSession) {
                 existingSession
             );
 
-        enterLuma(
+        console.log(
+            "Luma session:",
             session
         );
 
@@ -2744,229 +840,1007 @@ if (existingSession) {
 
 
 /* =========================================================
-   INITIALIZE
+   DISCORD OAUTH
 ========================================================= */
 
-renderDMList();
-/* =========================================================
-   LUMA — TEST CHAT
-========================================================= */
-
-const chatApp =
-    document.getElementById("chatApp");
-
-const messages =
-    document.getElementById("messages");
-
-const messageInput =
-    document.getElementById("messageInput");
-
-const sendMessage =
-    document.getElementById("sendMessage");
+const DISCORD_OAUTH_URL =
+    "https://luma-backend-w8gq.onrender.com/auth/discord";
 
 
-/* =========================================================
-   OPEN TEST CHAT AFTER LOGIN
-========================================================= */
+const discordLogin =
+    document.getElementById(
+        "discordLogin"
+    );
 
-function openTestChat() {
 
-    if (!chatApp) return;
+const discordSignup =
+    document.getElementById(
+        "discordLoginSignup"
+    );
 
-    document.querySelector(".auth-container").style.display =
-        "none";
 
-    document.querySelector(".background").style.display =
-        "none";
+if (discordLogin) {
 
-    chatApp.style.display =
-        "flex";
+    discordLogin.addEventListener(
+        "click",
+        () => {
+
+            window.location.href =
+                DISCORD_OAUTH_URL;
+
+        }
+    );
+
+}
+
+
+if (discordSignup) {
+
+    discordSignup.addEventListener(
+        "click",
+        () => {
+
+            window.location.href =
+                DISCORD_OAUTH_URL;
+
+        }
+    );
 
 }
 
 
 /* =========================================================
-   SEND MESSAGE
+   LUMA TEST APP
 ========================================================= */
 
-function sendTestMessage() {
+function openLumaApp(session) {
 
-    const text =
-        messageInput.value.trim();
-
-    if (!text) return;
+    document.title =
+        "Luma";
 
 
-    const message =
-        document.createElement("div");
+    document.body.innerHTML = `
 
-    message.className =
-        "message";
+        <div class="luma-app">
+
+            <aside class="luma-sidebar">
+
+                <div class="luma-home">
+                    ✦
+                </div>
 
 
-    message.innerHTML = `
+                <div class="dm-sidebar">
 
-        <div class="message-avatar">
-            ME
-        </div>
+                    <div class="dm-search">
+                        <span>Search</span>
+                        <span>⌕</span>
+                    </div>
 
-        <div class="message-content">
 
-            <div class="message-meta">
+                    <button
+                        class="friends-button"
+                        id="friendsButton"
+                    >
+                        <span>👥</span>
+                        Friends
+                    </button>
 
-                <strong>You</strong>
 
-                <span>
-                    Today
-                </span>
+                    <div class="dm-title">
+                        DIRECT MESSAGES
+                    </div>
 
-            </div>
 
-            <div class="message-text"></div>
+                    <button
+                        class="dm-user active"
+                        id="testFriend"
+                    >
+
+                        <div class="avatar test-avatar">
+                            T
+                        </div>
+
+                        <div class="dm-user-info">
+
+                            <strong>
+                                Luma Test Friend
+                            </strong>
+
+                            <small>
+                                Online
+                            </small>
+
+                        </div>
+
+                        <span class="online-dot"></span>
+
+                    </button>
+
+                </div>
+
+            </aside>
+
+
+            <main class="luma-main">
+
+                <header class="chat-header">
+
+                    <div class="chat-person">
+
+                        <div class="avatar test-avatar">
+                            T
+                        </div>
+
+                        <div>
+
+                            <strong>
+                                Luma Test Friend
+                            </strong>
+
+                            <span>
+                                Online
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                    <div class="header-actions">
+                        🔍
+                        📞
+                        ⚙
+                    </div>
+
+                </header>
+
+
+                <section
+                    class="chat-messages"
+                    id="chatMessages"
+                >
+
+                    <div class="welcome-chat">
+
+                        <div class="large-avatar">
+                            T
+                        </div>
+
+                        <h1>
+                            Luma Test Friend
+                        </h1>
+
+                        <p>
+                            This is your test friend.
+                        </p>
+
+                        <p>
+                            Send a message below to test chatting.
+                        </p>
+
+                    </div>
+
+                </section>
+
+
+                <div class="message-area">
+
+                    <div
+                        class="message-input-wrapper"
+                    >
+
+                        <button
+                            class="chat-plus"
+                            id="chatPlus"
+                            type="button"
+                        >
+                            +
+                        </button>
+
+
+                        <input
+                            id="messageInput"
+                            type="text"
+                            placeholder="Message Luma Test Friend"
+                            autocomplete="off"
+                        >
+
+
+                        <button
+                            class="chat-tool"
+                            type="button"
+                        >
+                            😊
+                        </button>
+
+
+                        <button
+                            class="chat-send"
+                            id="sendMessage"
+                            type="button"
+                        >
+                            ➤
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </main>
 
         </div>
 
     `;
 
 
-    message
-        .querySelector(".message-text")
-        .textContent = text;
+    addLumaAppStyles();
+
+    setupTestChat(session);
+
+}
 
 
-    messages.appendChild(message);
+/* =========================================================
+   TEST CHAT
+========================================================= */
+
+function setupTestChat(session) {
+
+    const input =
+        document.getElementById(
+            "messageInput"
+        );
 
 
-    messageInput.value = "";
+    const send =
+        document.getElementById(
+            "sendMessage"
+        );
 
 
-    messages.scrollTop =
-        messages.scrollHeight;
+    const messages =
+        document.getElementById(
+            "chatMessages"
+        );
 
 
-    /* TEST RESPONSE */
-
-    setTimeout(() => {
-
-        const reply =
-            document.createElement("div");
-
-        reply.className =
-            "message";
+    const friend =
+        document.getElementById(
+            "testFriend"
+        );
 
 
-        reply.innerHTML = `
+    function sendMessage() {
 
-            <div class="message-avatar">
-                LT
+        const text =
+            input.value.trim();
+
+
+        if (!text) {
+            return;
+        }
+
+
+        const message =
+            document.createElement(
+                "div"
+            );
+
+
+        message.className =
+            "message-row own";
+
+
+        message.innerHTML = `
+
+            <div class="avatar user-avatar">
+                ${escapeHTML(
+                    session.displayName
+                        .charAt(0)
+                        .toUpperCase()
+                )}
             </div>
 
             <div class="message-content">
 
-                <div class="message-meta">
-
-                    <strong>LumaTest</strong>
+                <div class="message-author">
+                    ${escapeHTML(
+                        session.displayName
+                    )}
 
                     <span>
-                        Today
+                        just now
                     </span>
-
                 </div>
 
-                <div class="message-text"></div>
+                <div class="message-text">
+                    ${escapeHTML(text)}
+                </div>
 
             </div>
 
         `;
 
 
-        reply
-            .querySelector(".message-text")
-            .textContent =
-                "Got your message! 👋 This is only a test chat.";
+        messages.appendChild(
+            message
+        );
 
-        messages.appendChild(reply);
 
+        input.value = "";
 
         messages.scrollTop =
             messages.scrollHeight;
 
-    }, 600);
 
-}
+        /* =====================================
+           TEST FRIEND AUTO REPLY
+        ===================================== */
+
+        setTimeout(() => {
+
+            const reply =
+                document.createElement(
+                    "div"
+                );
 
 
-/* =========================================================
-   SEND BUTTON
-========================================================= */
+            reply.className =
+                "message-row";
 
-if (sendMessage) {
 
-    sendMessage.addEventListener(
+            reply.innerHTML = `
+
+                <div class="avatar test-avatar">
+                    T
+                </div>
+
+                <div class="message-content">
+
+                    <div class="message-author">
+                        Luma Test Friend
+                        <span>
+                            just now
+                        </span>
+                    </div>
+
+                    <div class="message-text">
+                        Test message received! 👋
+                    </div>
+
+                </div>
+
+            `;
+
+
+            messages.appendChild(
+                reply
+            );
+
+
+            messages.scrollTop =
+                messages.scrollHeight;
+
+        }, 700);
+
+    }
+
+
+    send.addEventListener(
         "click",
-        sendTestMessage
+        sendMessage
     );
 
-}
 
-
-/* =========================================================
-   ENTER TO SEND
-========================================================= */
-
-if (messageInput) {
-
-    messageInput.addEventListener(
+    input.addEventListener(
         "keydown",
         event => {
 
             if (
-                event.key === "Enter" &&
-                !event.shiftKey
+                event.key === "Enter"
             ) {
 
                 event.preventDefault();
 
-                sendTestMessage();
+                sendMessage();
 
             }
 
         }
     );
 
-}
 
-
-/* =========================================================
-   CONNECT LOGIN TO TEST CHAT
-========================================================= */
-
-/*
-   We only hook into the existing login button.
-   Your account creation/login system itself is untouched.
-*/
-
-if (login) {
-
-    login.addEventListener(
-        "submit",
+    friend.addEventListener(
+        "click",
         () => {
 
-            setTimeout(() => {
-
-                if (
-                    localStorage.getItem(
-                        CURRENT_USER_KEY
-                    )
-                ) {
-
-                    openTestChat();
-
-                }
-
-            }, 750);
+            friend.classList.add(
+                "active"
+            );
 
         }
     );
 
 }
+
+
+/* =========================================================
+   ESCAPE USER MESSAGE
+========================================================= */
+
+function escapeHTML(text) {
+
+    const div =
+        document.createElement(
+            "div"
+        );
+
+    div.textContent =
+        text;
+
+    return div.innerHTML;
+
+}
+
+
+/* =========================================================
+   LUMA APP DESIGN
+========================================================= */
+
+function addLumaAppStyles() {
+
+    const style =
+        document.createElement(
+            "style"
+        );
+
+
+    style.textContent = `
+
+        .luma-app {
+            position: fixed;
+            inset: 0;
+
+            display: flex;
+
+            background: #111214;
+            color: #f2f3f5;
+
+            font-family:
+                "gg sans",
+                "Noto Sans",
+                Arial,
+                sans-serif;
+        }
+
+
+        /* ==============================
+           LEFT SIDE
+        ============================== */
+
+        .luma-sidebar {
+            width: 320px;
+
+            display: flex;
+
+            background: #1e1f22;
+        }
+
+
+        .luma-home {
+            width: 72px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            background: #111214;
+
+            color: white;
+
+            font-size: 27px;
+
+            border-right:
+                1px solid
+                rgba(255,255,255,.04);
+        }
+
+
+        .dm-sidebar {
+            width: 248px;
+
+            padding: 12px;
+
+            overflow-y: auto;
+        }
+
+
+        .dm-search {
+            height: 34px;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            padding: 0 10px;
+
+            margin-bottom: 10px;
+
+            border-radius: 5px;
+
+            background: #111214;
+
+            color: #949ba4;
+
+            font-size: 13px;
+        }
+
+
+        .friends-button {
+            width: 100%;
+            height: 42px;
+
+            display: flex;
+            align-items: center;
+
+            gap: 12px;
+
+            padding: 0 12px;
+
+            border: 0;
+            border-radius: 6px;
+
+            background: transparent;
+
+            color: #dbdee1;
+
+            font-size: 14px;
+            font-weight: 600;
+
+            cursor: pointer;
+
+            text-align: left;
+        }
+
+
+        .friends-button:hover {
+            background: #35373c;
+        }
+
+
+        .dm-title {
+            margin:
+                22px 8px 8px;
+
+            color: #949ba4;
+
+            font-size: 11px;
+            font-weight: 700;
+
+            letter-spacing: .5px;
+        }
+
+
+        .dm-user {
+            position: relative;
+
+            width: 100%;
+
+            display: flex;
+            align-items: center;
+
+            gap: 10px;
+
+            padding: 7px;
+
+            border: 0;
+            border-radius: 6px;
+
+            background: transparent;
+
+            color: #dbdee1;
+
+            cursor: pointer;
+
+            text-align: left;
+        }
+
+
+        .dm-user:hover,
+        .dm-user.active {
+            background: #35373c;
+        }
+
+
+        .dm-user-info {
+            display: flex;
+
+            flex-direction: column;
+
+            min-width: 0;
+        }
+
+
+        .dm-user-info strong {
+            overflow: hidden;
+
+            white-space: nowrap;
+            text-overflow: ellipsis;
+
+            font-size: 13px;
+        }
+
+
+        .dm-user-info small {
+            margin-top: 2px;
+
+            color: #23a55a;
+
+            font-size: 11px;
+        }
+
+
+        .online-dot {
+            position: absolute;
+
+            right: 7px;
+            bottom: 7px;
+
+            width: 9px;
+            height: 9px;
+
+            border-radius: 50%;
+
+            background: #23a55a;
+
+            border:
+                2px solid
+                #1e1f22;
+        }
+
+
+        /* ==============================
+           AVATARS
+        ============================== */
+
+        .avatar,
+        .large-avatar {
+            flex-shrink: 0;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 50%;
+
+            font-weight: 700;
+        }
+
+
+        .avatar {
+            width: 36px;
+            height: 36px;
+
+            font-size: 15px;
+        }
+
+
+        .large-avatar {
+            width: 82px;
+            height: 82px;
+
+            margin-bottom: 14px;
+
+            font-size: 30px;
+        }
+
+
+        .test-avatar {
+            background:
+                linear-gradient(
+                    135deg,
+                    #5865f2,
+                    #7289da
+                );
+
+            color: white;
+        }
+
+
+        .user-avatar {
+            background:
+                linear-gradient(
+                    135deg,
+                    #23a55a,
+                    #1abc9c
+                );
+
+            color: white;
+        }
+
+
+        /* ==============================
+           MAIN
+        ============================== */
+
+        .luma-main {
+            flex: 1;
+
+            min-width: 0;
+
+            display: flex;
+
+            flex-direction: column;
+
+            background: #313338;
+        }
+
+
+        .chat-header {
+            height: 58px;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            padding: 0 20px;
+
+            border-bottom:
+                1px solid
+                rgba(0,0,0,.25);
+
+            box-shadow:
+                0 1px 4px
+                rgba(0,0,0,.15);
+        }
+
+
+        .chat-person {
+            display: flex;
+            align-items: center;
+
+            gap: 10px;
+        }
+
+
+        .chat-person > div:last-child {
+            display: flex;
+
+            flex-direction: column;
+        }
+
+
+        .chat-person strong {
+            font-size: 15px;
+        }
+
+
+        .chat-person span {
+            color: #23a55a;
+
+            font-size: 11px;
+        }
+
+
+        .header-actions {
+            display: flex;
+
+            gap: 20px;
+
+            color: #b5bac1;
+
+            font-size: 18px;
+        }
+
+
+        /* ==============================
+           MESSAGES
+        ============================== */
+
+        .chat-messages {
+            flex: 1;
+
+            overflow-y: auto;
+
+            padding: 24px;
+        }
+
+
+        .welcome-chat {
+            padding-top: 35vh;
+
+            transform:
+                translateY(-120px);
+        }
+
+
+        .welcome-chat h1 {
+            margin-bottom: 7px;
+
+            font-size: 25px;
+        }
+
+
+        .welcome-chat p {
+            margin-top: 4px;
+
+            color: #b5bac1;
+
+            font-size: 14px;
+        }
+
+
+        .message-row {
+            display: flex;
+
+            gap: 12px;
+
+            margin-bottom: 20px;
+        }
+
+
+        .message-row.own {
+            margin-top: 20px;
+        }
+
+
+        .message-content {
+            min-width: 0;
+        }
+
+
+        .message-author {
+            margin-bottom: 3px;
+
+            color: #f2f3f5;
+
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+
+        .message-author span {
+            margin-left: 5px;
+
+            color: #949ba4;
+
+            font-size: 10px;
+            font-weight: 400;
+        }
+
+
+        .message-text {
+            color: #dbdee1;
+
+            font-size: 14px;
+
+            word-break: break-word;
+        }
+
+
+        /* ==============================
+           INPUT
+        ============================== */
+
+        .message-area {
+            padding:
+                0 20px 20px;
+        }
+
+
+        .message-input-wrapper {
+            height: 48px;
+
+            display: flex;
+            align-items: center;
+
+            padding: 0 8px;
+
+            border-radius: 8px;
+
+            background: #383a40;
+        }
+
+
+        .message-input-wrapper input {
+            flex: 1;
+
+            min-width: 0;
+
+            height: 100%;
+
+            padding: 0 12px;
+
+            border: 0;
+            outline: 0;
+
+            background: transparent;
+
+            color: #f2f3f5;
+
+            font-family: inherit;
+            font-size: 14px;
+        }
+
+
+        .message-input-wrapper input::placeholder {
+            color: #949ba4;
+        }
+
+
+        .chat-plus,
+        .chat-tool,
+        .chat-send {
+            width: 34px;
+            height: 34px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border: 0;
+            border-radius: 6px;
+
+            background: transparent;
+
+            color: #b5bac1;
+
+            font-size: 19px;
+
+            cursor: pointer;
+        }
+
+
+        .chat-plus:hover,
+        .chat-tool:hover,
+        .chat-send:hover {
+            color: white;
+
+            background:
+                rgba(255,255,255,.08);
+        }
+
+
+        .chat-send {
+            color: #5865f2;
+        }
+
+
+        /* ==============================
+           MOBILE
+        ============================== */
+
+        @media (max-width: 700px) {
+
+            .luma-sidebar {
+                width: 72px;
+            }
+
+            .dm-sidebar {
+                display: none;
+            }
+
+            .chat-header {
+                padding: 0 12px;
+            }
+
+            .message-area {
+                padding:
+                    0 10px 10px;
+            }
+
+            .chat-messages {
+                padding: 15px;
+            }
+
+        }
+
+    `;
+
+
+    document.head.appendChild(
+        style
+    );
+
+}
+```
