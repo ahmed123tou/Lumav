@@ -1,4 +1,3 @@
-```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -18,6 +17,10 @@
 
 <body>
 
+    <!-- =====================================================
+         BACKGROUND
+    ====================================================== -->
+
     <div class="background">
         <div class="glow glow-1"></div>
         <div class="glow glow-2"></div>
@@ -25,11 +28,13 @@
     </div>
 
 
-    <main class="auth-container">
+    <!-- =====================================================
+         AUTH
+    ====================================================== -->
+
+    <main class="auth-container" id="authContainer">
 
         <section class="auth-card">
-
-            <!-- BRAND -->
 
             <div class="brand">
                 <div class="brand-icon">✦</div>
@@ -37,30 +42,18 @@
             </div>
 
 
-            <!-- =================================================
-                 LOGIN
-            ================================================== -->
+            <!-- LOGIN -->
 
-            <div
-                class="auth-form active"
-                id="loginForm"
-            >
+            <div class="auth-form active" id="loginForm">
 
                 <div class="heading">
                     <h1>Welcome back!</h1>
-
-                    <p>
-                        We're so excited to see you again!
-                    </p>
+                    <p>We're so excited to see you again!</p>
                 </div>
-
 
                 <form id="login">
 
-                    <!-- USERNAME -->
-
                     <div class="field">
-
                         <label for="loginUsername">
                             USERNAME <span>*</span>
                         </label>
@@ -73,11 +66,8 @@
                             maxlength="24"
                             required
                         >
-
                     </div>
 
-
-                    <!-- PASSWORD -->
 
                     <div class="field">
 
@@ -103,38 +93,16 @@
                                 title="Show password"
                             >
 
-                                <svg
-                                    class="eye-icon eye-open"
-                                    viewBox="0 0 24 24"
-                                >
-                                    <path
-                                        d="M2.5 12s3.5-6 9.5-6 9.5 6 9.5 6-3.5 6-9.5 6-9.5-6-9.5-6Z"
-                                    ></path>
-
-                                    <circle
-                                        cx="12"
-                                        cy="12"
-                                        r="2.8"
-                                    ></circle>
+                                <svg class="eye-icon eye-open" viewBox="0 0 24 24">
+                                    <path d="M2.5 12s3.5-6 9.5-6 9.5 6 9.5 6-3.5 6-9.5 6-9.5-6-9.5-6Z"></path>
+                                    <circle cx="12" cy="12" r="2.8"></circle>
                                 </svg>
 
-                                <svg
-                                    class="eye-icon eye-closed"
-                                    viewBox="0 0 24 24"
-                                >
+                                <svg class="eye-icon eye-closed" viewBox="0 0 24 24">
                                     <path d="M3 3l18 18"></path>
-
-                                    <path
-                                        d="M10.6 6.2A9.9 9.9 0 0 1 12 6c6 0 9.5 6 9.5 6a18.7 18.7 0 0 1-3.1 3.7"
-                                    ></path>
-
-                                    <path
-                                        d="M6.1 8.1C3.7 9.9 2.5 12 2.5 12s3.5 6 9.5 6c1.1 0 2.1-.2 3-.5"
-                                    ></path>
-
-                                    <path
-                                        d="M9.9 9.9a3 3 0 0 0 4.2 4.2"
-                                    ></path>
+                                    <path d="M10.6 6.2A9.9 9.9 0 0 1 12 6c6 0 9.5 6 9.5 6a18.7 18.7 0 0 1-3.1 3.7"></path>
+                                    <path d="M6.1 8.1C3.7 9.9 2.5 12 2.5 12s3.5 6 9.5 6c1.1 0 2.1-.2 3-.5"></path>
+                                    <path d="M9.9 9.9a3 3 0 0 0 4.2 4.2"></path>
                                 </svg>
 
                             </button>
@@ -144,33 +112,20 @@
                     </div>
 
 
-                    <button
-                        class="primary-btn"
-                        type="submit"
-                    >
-
-                        <span class="btn-text">
-                            Log In
-                        </span>
-
+                    <button class="primary-btn" type="submit">
+                        <span class="btn-text">Log In</span>
                         <span class="loader"></span>
-
                     </button>
 
-
-                    <div
-                        class="error-message"
-                        id="loginError"
-                    ></div>
+                    <div class="error-message" id="loginError"></div>
 
                 </form>
 
 
-                <!-- DISCORD LOGIN -->
-
                 <div class="oauth-divider">
                     <span>OR</span>
                 </div>
+
 
                 <button
                     type="button"
@@ -180,7 +135,7 @@
                     <svg viewBox="0 0 24 24" aria-hidden="true">
                         <path
                             fill="currentColor"
-                            d="M19.54 5.2A16.8 16.8 0 0 0 15.45 4l-.5 1.02a15.4 15.4 0 0 0-5.9 0L8.55 4a16.8 16.8 0 0 0-4.09 1.2C1.87 9.1 1.17 12.9 1.52 16.65A16.9 16.9 0 0 0 6.55 19l1.22-1.66a10.7 10.7 0 0 1-1.8-.87l.44-.34c3.47 1.63 7.22 1.63 10.65 0l.44.34c-.58.35-1.18.64-1.8.87L16.92 19a16.9 16.9 0 0 0 5.03-2.35c.4-4.35-.68-8.12-2.41-11.45ZM8.66 14.84c-1.03 0-1.88-.95-1.88-2.12s.83-2.12 1.88-2.12c1.04 0 1.89.95 1.88 2.12 0 1.17-.84 2.12-1.88 2.12Zm6.68 0c-1.03 0-1.88-.95-1.88-2.12s.83-2.12 1.88-2.12c1.04 0 1.89.95 1.88 2.12 0 1.17-.84 2.12-2.12 2.12Z"
+                            d="M19.54 5.2A16.8 16.8 0 0 0 15.45 4l-.5 1.02a15.4 15.4 0 0 0-5.9 0L8.55 4a16.8 16.8 0 0 0-4.09 1.2C1.87 9.1 1.17 12.9 1.52 16.65A16.9 16.9 0 0 0 6.55 19l1.22-1.66a10.7 10.7 0 0 1-1.8-.87l.44-.34c3.47 1.63 7.22 1.63 10.65 0l.44.34c-.58.35-1.18.64-1.8.87L16.92 19a16.9 16.9 0 0 0 5.03-2.35c.4-4.35-.68-8.12-2.41-11.45ZM8.66 14.84c-1.03 0-1.88-.95-1.88-2.12s.83-2.12 1.88-2.12c1.04 0 1.89.95 1.88 2.12 0 1.17-.84 2.12-1.88 2.12Zm6.68 0c-1.03 0-1.88-.95-1.88-2.12s.83-2.12 1.88-2.12c1.04 0 1.89.95 1.88 2.12 0 1.17-.84 2.12-1.88 2.12Z"
                         />
                     </svg>
 
@@ -189,47 +144,27 @@
 
 
                 <div class="switch">
+                    <span>Don't have an account?</span>
 
-                    <span>
-                        Don't have an account?
-                    </span>
-
-                    <button
-                        type="button"
-                        id="showSignup"
-                    >
+                    <button type="button" id="showSignup">
                         Create a new account
                     </button>
-
                 </div>
 
             </div>
 
 
+            <!-- SIGNUP -->
 
-            <!-- =================================================
-                 SIGNUP
-            ================================================== -->
-
-            <div
-                class="auth-form"
-                id="signupForm"
-            >
+            <div class="auth-form" id="signupForm">
 
                 <div class="heading">
-
                     <h1>Create an account</h1>
-
-                    <p>
-                        Join Luma and start hanging out.
-                    </p>
-
+                    <p>Join Luma and start hanging out.</p>
                 </div>
 
 
                 <form id="signup">
-
-                    <!-- USERNAME -->
 
                     <div class="field">
 
@@ -253,8 +188,6 @@
                     </div>
 
 
-                    <!-- DISPLAY NAME -->
-
                     <div class="field">
 
                         <label for="displayName">
@@ -275,8 +208,6 @@
 
                     </div>
 
-
-                    <!-- PASSWORD -->
 
                     <div class="field">
 
@@ -303,46 +234,22 @@
                                 title="Show password"
                             >
 
-                                <svg
-                                    class="eye-icon eye-open"
-                                    viewBox="0 0 24 24"
-                                >
-                                    <path
-                                        d="M2.5 12s3.5-6 9.5-6 9.5 6 9.5 6-3.5 6-9.5 6-9.5-6-9.5-6Z"
-                                    ></path>
-
-                                    <circle
-                                        cx="12"
-                                        cy="12"
-                                        r="2.8"
-                                    ></circle>
+                                <svg class="eye-icon eye-open" viewBox="0 0 24 24">
+                                    <path d="M2.5 12s3.5-6 9.5-6 9.5 6 9.5 6-3.5 6-9.5 6-9.5-6-9.5-6Z"></path>
+                                    <circle cx="12" cy="12" r="2.8"></circle>
                                 </svg>
 
-                                <svg
-                                    class="eye-icon eye-closed"
-                                    viewBox="0 0 24 24"
-                                >
+                                <svg class="eye-icon eye-closed" viewBox="0 0 24 24">
                                     <path d="M3 3l18 18"></path>
-
-                                    <path
-                                        d="M10.6 6.2A9.9 9.9 0 0 1 12 6c6 0 9.5 6 9.5 6a18.7 18.7 0 0 1-3.1 3.7"
-                                    ></path>
-
-                                    <path
-                                        d="M6.1 8.1C3.7 9.9 2.5 12 2.5 12s3.5 6 9.5 6c1.1 0 2.1-.2 3-.5"
-                                    ></path>
-
-                                    <path
-                                        d="M9.9 9.9a3 3 0 0 0 4.2 4.2"
-                                    ></path>
+                                    <path d="M10.6 6.2A9.9 9.9 0 0 1 12 6c6 0 9.5 6 9.5 6a18.7 18.7 0 0 1-3.1 3.7"></path>
+                                    <path d="M6.1 8.1C3.7 9.9 2.5 12 2.5 12s3.5 6 9.5 6c1.1 0 2.1-.2 3-.5"></path>
+                                    <path d="M9.9 9.9a3 3 0 0 0 4.2 4.2"></path>
                                 </svg>
 
                             </button>
 
                         </div>
 
-
-                        <!-- GENERATE PASSWORD -->
 
                         <button
                             type="button"
@@ -352,15 +259,12 @@
                             ✦ Generate random password
                         </button>
 
-
                         <small>
                             6–32 letters and numbers only
                         </small>
 
                     </div>
 
-
-                    <!-- CONFIRM PASSWORD -->
 
                     <div class="field">
 
@@ -387,38 +291,16 @@
                                 title="Show password"
                             >
 
-                                <svg
-                                    class="eye-icon eye-open"
-                                    viewBox="0 0 24 24"
-                                >
-                                    <path
-                                        d="M2.5 12s3.5-6 9.5-6 9.5 6 9.5 6-3.5 6-9.5 6-9.5-6-9.5-6Z"
-                                    ></path>
-
-                                    <circle
-                                        cx="12"
-                                        cy="12"
-                                        r="2.8"
-                                    ></circle>
+                                <svg class="eye-icon eye-open" viewBox="0 0 24 24">
+                                    <path d="M2.5 12s3.5-6 9.5-6 9.5 6 9.5 6-3.5 6-9.5 6-9.5-6-9.5-6Z"></path>
+                                    <circle cx="12" cy="12" r="2.8"></circle>
                                 </svg>
 
-                                <svg
-                                    class="eye-icon eye-closed"
-                                    viewBox="0 0 24 24"
-                                >
+                                <svg class="eye-icon eye-closed" viewBox="0 0 24 24">
                                     <path d="M3 3l18 18"></path>
-
-                                    <path
-                                        d="M10.6 6.2A9.9 9.9 0 0 1 12 6c6 0 9.5 6 9.5 6a18.7 18.7 0 0 1-3.1 3.7"
-                                    ></path>
-
-                                    <path
-                                        d="M6.1 8.1C3.7 9.9 2.5 12 2.5 12s3.5 6 9.5 6c1.1 0 2.1-.2 3-.5"
-                                    ></path>
-
-                                    <path
-                                        d="M9.9 9.9a3 3 0 0 0 4.2 4.2"
-                                    ></path>
+                                    <path d="M10.6 6.2A9.9 9.9 0 0 1 12 6c6 0 9.5 6 9.5 6a18.7 18.7 0 0 1-3.1 3.7"></path>
+                                    <path d="M6.1 8.1C3.7 9.9 2.5 12 2.5 12s3.5 6 9.5 6c1.1 0 2.1-.2 3-.5"></path>
+                                    <path d="M9.9 9.9a3 3 0 0 0 4.2 4.2"></path>
                                 </svg>
 
                             </button>
@@ -428,33 +310,20 @@
                     </div>
 
 
-                    <button
-                        class="primary-btn"
-                        type="submit"
-                    >
-
-                        <span class="btn-text">
-                            Create Account
-                        </span>
-
+                    <button class="primary-btn" type="submit">
+                        <span class="btn-text">Create Account</span>
                         <span class="loader"></span>
-
                     </button>
 
-
-                    <div
-                        class="error-message"
-                        id="signupError"
-                    ></div>
+                    <div class="error-message" id="signupError"></div>
 
                 </form>
 
 
-                <!-- DISCORD LOGIN -->
-
                 <div class="oauth-divider">
                     <span>OR</span>
                 </div>
+
 
                 <button
                     type="button"
@@ -473,18 +342,11 @@
 
 
                 <div class="switch">
+                    <span>Already have an account?</span>
 
-                    <span>
-                        Already have an account?
-                    </span>
-
-                    <button
-                        type="button"
-                        id="showLogin"
-                    >
+                    <button type="button" id="showLogin">
                         Log In
                     </button>
-
                 </div>
 
             </div>
@@ -494,14 +356,456 @@
     </main>
 
 
-    <div
-        class="toast"
-        id="toast"
-    ></div>
+    <!-- =====================================================
+         LUMA APP
+    ====================================================== -->
+
+    <div class="luma-app" id="lumaApp">
+
+        <!-- HOME BAR -->
+
+        <aside class="home-bar">
+
+            <button class="home-button active" id="homeButton">
+                <span>✦</span>
+            </button>
+
+            <div class="home-divider"></div>
+
+            <button class="home-icon" title="Friends">
+                👥
+            </button>
+
+            <div class="home-spacer"></div>
+
+            <button class="home-icon" id="settingsButton" title="Settings">
+                ⚙
+            </button>
+
+        </aside>
+
+
+        <!-- DM SIDEBAR -->
+
+        <aside class="dm-sidebar">
+
+            <div class="dm-search">
+                <input
+                    type="text"
+                    id="dmSearch"
+                    placeholder="Find or start a conversation"
+                >
+            </div>
+
+
+            <button class="friends-button" id="friendsButton">
+                <span class="friends-button-icon">👥</span>
+                <span>Friends</span>
+            </button>
+
+
+            <div class="sidebar-title">
+                DIRECT MESSAGES
+            </div>
+
+
+            <div class="dm-list" id="dmList">
+                <div class="empty-dms">
+                    <div>💬</div>
+                    <span>No conversations yet</span>
+                    <small>Add a friend to start chatting.</small>
+                </div>
+            </div>
+
+
+            <!-- USER PANEL -->
+
+            <div class="user-panel">
+
+                <button class="user-avatar-button" id="profileButton">
+
+                    <div class="avatar" id="currentAvatar">
+                        ?
+                    </div>
+
+                    <span class="status-dot"></span>
+
+                </button>
+
+
+                <div class="current-user-info">
+
+                    <strong id="currentDisplayName">
+                        User
+                    </strong>
+
+                    <span id="currentUsername">
+                        @user
+                    </span>
+
+                </div>
+
+
+                <button class="user-panel-button" id="logoutButton">
+                    ⎋
+                </button>
+
+            </div>
+
+        </aside>
+
+
+        <!-- MAIN AREA -->
+
+        <main class="main-area" id="mainArea">
+
+            <!-- FRIENDS -->
+
+            <section class="friends-view" id="friendsView">
+
+                <header class="friends-header">
+
+                    <div class="friends-header-left">
+
+                        <h2>
+                            <span>👥</span>
+                            Friends
+                        </h2>
+
+                        <div class="header-divider"></div>
+
+                        <button class="friend-tab" data-tab="online">
+                            Online
+                        </button>
+
+                        <button class="friend-tab active" data-tab="all">
+                            All
+                        </button>
+
+                        <button class="friend-tab" data-tab="pending">
+                            Pending
+                            <span class="pending-count" id="pendingCount">
+                                0
+                            </span>
+                        </button>
+
+                        <button class="friend-tab" data-tab="blocked">
+                            Blocked
+                        </button>
+
+                    </div>
+
+
+                    <button
+                        class="add-friend-button"
+                        id="addFriendButton"
+                    >
+                        Add Friend
+                    </button>
+
+                </header>
+
+
+                <div class="friends-content">
+
+                    <div class="friends-title">
+                        <h1 id="friendSectionTitle">
+                            All Friends
+                        </h1>
+
+                        <p id="friendSectionDescription">
+                            Your Luma friends will appear here.
+                        </p>
+                    </div>
+
+
+                    <div
+                        class="friends-list"
+                        id="friendsList"
+                    >
+
+                        <div class="no-friends">
+
+                            <div class="no-friends-icon">
+                                👥
+                            </div>
+
+                            <h2>
+                                It's quiet here...
+                            </h2>
+
+                            <p>
+                                Add someone to your friends list
+                                and start hanging out.
+                            </p>
+
+                            <button id="emptyAddFriend">
+                                Add Friend
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- CHAT -->
+
+            <section class="chat-view hidden" id="chatView">
+
+                <header class="chat-header">
+
+                    <div class="chat-user">
+
+                        <div class="chat-avatar" id="chatAvatar">
+                            ?
+                        </div>
+
+                        <div>
+                            <strong id="chatName">
+                                User
+                            </strong>
+
+                            <span id="chatStatus">
+                                Offline
+                            </span>
+                        </div>
+
+                    </div>
+
+
+                    <div class="chat-actions">
+
+                        <button title="Profile" id="chatProfileButton">
+                            👤
+                        </button>
+
+                    </div>
+
+                </header>
+
+
+                <div class="messages-area" id="messagesArea">
+
+                    <div class="chat-welcome">
+
+                        <div class="chat-welcome-avatar" id="chatWelcomeAvatar">
+                            ?
+                        </div>
+
+                        <h1 id="chatWelcomeName">
+                            Start a conversation
+                        </h1>
+
+                        <p>
+                            This is the beginning of your
+                            direct message history.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="message-composer">
+
+                    <button class="composer-plus" id="attachmentButton">
+                        +
+                    </button>
+
+
+                    <div class="composer-input-wrapper">
+
+                        <textarea
+                            id="messageInput"
+                            placeholder="Message"
+                            rows="1"
+                        ></textarea>
+
+                        <div class="composer-tools">
+
+                            <button title="Emoji">
+                                😊
+                            </button>
+
+                            <button title="GIF">
+                                GIF
+                            </button>
+
+                        </div>
+
+                    </div>
+
+
+                    <button class="send-button" id="sendButton">
+                        ➤
+                    </button>
+
+                </div>
+
+            </section>
+
+
+            <!-- EMPTY -->
+
+            <section class="empty-main" id="emptyMain">
+
+                <div class="empty-main-icon">
+                    ✦
+                </div>
+
+                <h1>
+                    Welcome to Luma
+                </h1>
+
+                <p>
+                    Choose Friends to see your friends,
+                    or open a conversation to start chatting.
+                </p>
+
+            </section>
+
+        </main>
+
+
+        <!-- PROFILE PANEL -->
+
+        <aside class="profile-panel hidden" id="profilePanel">
+
+            <div class="profile-cover"></div>
+
+            <div class="profile-avatar-large" id="profileAvatar">
+                ?
+            </div>
+
+            <button class="profile-close" id="profileClose">
+                ×
+            </button>
+
+
+            <div class="profile-details">
+
+                <h2 id="profileDisplayName">
+                    User
+                </h2>
+
+                <p id="profileUsername">
+                    @user
+                </p>
+
+
+                <div class="profile-divider"></div>
+
+
+                <div class="profile-section">
+
+                    <label>
+                        USERNAME
+                    </label>
+
+                    <span id="profileUsernameFull">
+                        user
+                    </span>
+
+                </div>
+
+
+                <div class="profile-section">
+
+                    <label>
+                        STATUS
+                    </label>
+
+                    <span class="profile-online">
+                        ● Online
+                    </span>
+
+                </div>
+
+
+                <div class="profile-section" id="discordProfileSection">
+
+                    <label>
+                        ACCOUNT
+                    </label>
+
+                    <span>
+                        Discord connected
+                    </span>
+
+                </div>
+
+            </div>
+
+        </aside>
+
+    </div>
+
+
+    <!-- =====================================================
+         ADD FRIEND MODAL
+    ====================================================== -->
+
+    <div class="modal-overlay" id="addFriendModal">
+
+        <div class="modal-card">
+
+            <button class="modal-close" id="closeAddFriend">
+                ×
+            </button>
+
+            <div class="modal-icon">
+                👥
+            </div>
+
+            <h2>
+                Add Friend
+            </h2>
+
+            <p>
+                You can add a friend using their Luma username.
+            </p>
+
+
+            <form id="addFriendForm">
+
+                <label>
+                    LUMA USERNAME
+                </label>
+
+                <input
+                    type="text"
+                    id="friendUsernameInput"
+                    placeholder="Enter username"
+                    autocomplete="off"
+                >
+
+                <div
+                    class="modal-error"
+                    id="friendError"
+                ></div>
+
+
+                <button type="submit">
+                    Send Friend Request
+                </button>
+
+            </form>
+
+        </div>
+
+    </div>
+
+
+    <!-- TOAST -->
+
+    <div class="toast" id="toast"></div>
 
 
     <script src="script.js"></script>
 
 </body>
 </html>
-```
