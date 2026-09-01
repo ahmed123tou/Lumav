@@ -1,121 +1,68 @@
 /* =========================================================
-   LUMA
-   LOGIN + SIGNUP
-========================================================= */
-
-
-/* =========================================================
-   STORAGE
+   LUMA — LOGIN + SIGNUP
 ========================================================= */
 
 const USERS_KEY = "LUMA_USERS";
-
-const CURRENT_USER_KEY =
-    "LUMA_CURRENT_USER";
+const CURRENT_USER_KEY = "LUMA_CURRENT_USER";
 
 
 /* =========================================================
    ELEMENTS
 ========================================================= */
 
-const loginForm =
-    document.getElementById("loginForm");
+const loginForm = document.getElementById("loginForm");
+const signupForm = document.getElementById("signupForm");
 
-const signupForm =
-    document.getElementById("signupForm");
+const showSignup = document.getElementById("showSignup");
+const showLogin = document.getElementById("showLogin");
 
-const showSignup =
-    document.getElementById("showSignup");
+const login = document.getElementById("login");
+const signup = document.getElementById("signup");
 
-const showLogin =
-    document.getElementById("showLogin");
+const loginError = document.getElementById("loginError");
+const signupError = document.getElementById("signupError");
 
-const login =
-    document.getElementById("login");
+const toast = document.getElementById("toast");
 
-const signup =
-    document.getElementById("signup");
+const loginUsername = document.getElementById("loginUsername");
+const loginPassword = document.getElementById("loginPassword");
 
-const loginError =
-    document.getElementById("loginError");
-
-const signupError =
-    document.getElementById("signupError");
-
-const toast =
-    document.getElementById("toast");
-
-
-const signupUsername =
-    document.getElementById(
-        "signupUsername"
-    );
-
-const displayName =
-    document.getElementById(
-        "displayName"
-    );
-
-const signupPassword =
-    document.getElementById(
-        "signupPassword"
-    );
-
-const confirmPassword =
-    document.getElementById(
-        "confirmPassword"
-    );
+const signupUsername = document.getElementById("signupUsername");
+const displayName = document.getElementById("displayName");
+const signupPassword = document.getElementById("signupPassword");
+const confirmPassword = document.getElementById("confirmPassword");
 
 const generatePassword =
-    document.getElementById(
-        "generatePassword"
-    );
+    document.getElementById("generatePassword");
 
 
 /* =========================================================
-   GET USERS
+   USERS
 ========================================================= */
 
 function getUsers() {
-
     try {
-
-        const saved =
-            localStorage.getItem(
-                USERS_KEY
-            );
+        const saved = localStorage.getItem(USERS_KEY);
 
         if (!saved) {
             return [];
         }
 
-        const users =
-            JSON.parse(saved);
+        const users = JSON.parse(saved);
 
-        return Array.isArray(users)
-            ? users
-            : [];
+        return Array.isArray(users) ? users : [];
 
     } catch {
-
         return [];
-
     }
-
 }
 
 
-/* =========================================================
-   SAVE USERS
-========================================================= */
-
 function saveUsers(users) {
-
     localStorage.setItem(
         USERS_KEY,
         JSON.stringify(users)
     );
-
 }
 
 
@@ -125,69 +72,43 @@ function saveUsers(users) {
 
 function showToast(message) {
 
-    toast.textContent =
-        message;
+    if (!toast) return;
 
-    toast.classList.add(
-        "show"
-    );
+    toast.textContent = message;
+
+    toast.classList.add("show");
 
     setTimeout(() => {
-
-        toast.classList.remove(
-            "show"
-        );
-
+        toast.classList.remove("show");
     }, 2500);
-
 }
 
 
 /* =========================================================
-   SWITCH TO SIGNUP
+   SWITCH LOGIN / SIGNUP
 ========================================================= */
 
 function openSignup() {
 
-    loginForm.classList.remove(
-        "active"
-    );
-
-    signupForm.classList.add(
-        "active"
-    );
+    loginForm.classList.remove("active");
+    signupForm.classList.add("active");
 
     loginError.textContent = "";
-
     signupError.textContent = "";
 
-    document.title =
-        "Luma — Register";
-
+    document.title = "Luma — Register";
 }
 
 
-/* =========================================================
-   SWITCH TO LOGIN
-========================================================= */
-
 function openLogin() {
 
-    signupForm.classList.remove(
-        "active"
-    );
-
-    loginForm.classList.add(
-        "active"
-    );
+    signupForm.classList.remove("active");
+    loginForm.classList.add("active");
 
     loginError.textContent = "";
-
     signupError.textContent = "";
 
-    document.title =
-        "Luma — Login";
-
+    document.title = "Luma — Login";
 }
 
 
@@ -205,141 +126,109 @@ showLogin.addEventListener(
 
 /* =========================================================
    PASSWORD SHOW / HIDE
-   WORKS FOR EVERY EYE BUTTON
 ========================================================= */
 
-document
-    .querySelectorAll(".eye-button")
-    .forEach(button => {
+function setupEyeButtons() {
 
-        button.addEventListener(
-            "click",
-            () => {
-
-                const passwordId =
-                    button.dataset.password;
-
-                const input =
-                    document.getElementById(
-                        passwordId
-                    );
-
-                if (!input) {
-                    return;
-                }
+    const eyeButtons =
+        document.querySelectorAll(".eye-button");
 
 
-                const openEye =
-                    button.querySelector(
-                        ".eye-open"
-                    );
+    eyeButtons.forEach(button => {
 
-                const closedEye =
-                    button.querySelector(
-                        ".eye-closed"
-                    );
+        button.addEventListener("click", function () {
+
+            const passwordId =
+                this.getAttribute("data-password");
+
+            const input =
+                document.getElementById(passwordId);
+
+            if (!input) {
+                return;
+            }
 
 
-                const showing =
-                    input.type === "text";
+            const isHidden =
+                input.type === "password";
 
 
-                if (showing) {
+            if (isHidden) {
 
-                    /* HIDE */
+                /* SHOW */
 
-                    input.type =
-                        "password";
+                input.type = "text";
 
-                    openEye.style.display =
-                        "block";
+                this.classList.add("showing");
 
-                    closedEye.style.display =
-                        "none";
+                this.setAttribute(
+                    "aria-label",
+                    "Hide password"
+                );
 
-                    button.setAttribute(
-                        "aria-label",
-                        "Show password"
-                    );
+                this.setAttribute(
+                    "title",
+                    "Hide password"
+                );
 
-                    button.setAttribute(
-                        "title",
-                        "Show password"
-                    );
+            } else {
 
-                } else {
+                /* HIDE */
 
-                    /* SHOW */
+                input.type = "password";
 
-                    input.type =
-                        "text";
+                this.classList.remove("showing");
 
-                    openEye.style.display =
-                        "none";
+                this.setAttribute(
+                    "aria-label",
+                    "Show password"
+                );
 
-                    closedEye.style.display =
-                        "block";
-
-                    button.setAttribute(
-                        "aria-label",
-                        "Hide password"
-                    );
-
-                    button.setAttribute(
-                        "title",
-                        "Hide password"
-                    );
-
-                }
+                this.setAttribute(
+                    "title",
+                    "Show password"
+                );
 
             }
-        );
+
+        });
 
     });
 
+}
+
+
+setupEyeButtons();
+
 
 /* =========================================================
-   USERNAME VALIDATION
+   USERNAME RULE
 ========================================================= */
 
 function validUsername(username) {
 
-    /*
-        Allowed:
-
-        A-Z
-        a-z
-        0-9
-        _
-        -
-
-        Nothing else.
-    */
-
-    return /^[A-Za-z0-9_-]{2,24}$/
-        .test(username);
+    return /^[A-Za-z0-9_-]{2,24}$/.test(
+        username
+    );
 
 }
 
 
 /* =========================================================
-   PASSWORD VALIDATION
+   PASSWORD RULE
 ========================================================= */
 
 function validPassword(password) {
 
-    /*
-        Letters + numbers only.
-    */
-
-    return /^[A-Za-z0-9]{6,32}$/
-        .test(password);
+    return /^[A-Za-z0-9]{6,32}$/.test(
+        password
+    );
 
 }
 
 
 /* =========================================================
-   DISPLAY NAME VALIDATION
+   DISPLAY NAME RULE
 ========================================================= */
 
 function validDisplayName(name) {
@@ -353,15 +242,15 @@ function validDisplayName(name) {
 
 
 /* =========================================================
-   CLEAN USERNAME WHILE TYPING
+   USERNAME LIVE FILTER
 ========================================================= */
 
 signupUsername.addEventListener(
     "input",
-    () => {
+    function () {
 
-        signupUsername.value =
-            signupUsername.value.replace(
+        this.value =
+            this.value.replace(
                 /[^A-Za-z0-9_-]/g,
                 ""
             );
@@ -371,15 +260,15 @@ signupUsername.addEventListener(
 
 
 /* =========================================================
-   CLEAN PASSWORD WHILE TYPING
+   PASSWORD LIVE FILTER
 ========================================================= */
 
 signupPassword.addEventListener(
     "input",
-    () => {
+    function () {
 
-        signupPassword.value =
-            signupPassword.value.replace(
+        this.value =
+            this.value.replace(
                 /[^A-Za-z0-9]/g,
                 ""
             );
@@ -390,10 +279,10 @@ signupPassword.addEventListener(
 
 confirmPassword.addEventListener(
     "input",
-    () => {
+    function () {
 
-        confirmPassword.value =
-            confirmPassword.value.replace(
+        this.value =
+            this.value.replace(
                 /[^A-Za-z0-9]/g,
                 ""
             );
@@ -403,67 +292,48 @@ confirmPassword.addEventListener(
 
 
 /* =========================================================
-   RANDOM PASSWORD GENERATOR
+   RANDOM PASSWORD
 ========================================================= */
 
-function generateRandomPassword(
-    length = 12
-) {
+function generateRandomPassword(length = 12) {
 
     const characters =
         "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
 
-
     let password = "";
 
-
-    /*
-        crypto.getRandomValues gives
-        us proper browser randomness.
-    */
-
-    const random =
+    const randomValues =
         new Uint32Array(length);
 
-
     crypto.getRandomValues(
-        random
+        randomValues
     );
 
-
-    for (
-        let i = 0;
-        i < length;
-        i++
-    ) {
+    for (let i = 0; i < length; i++) {
 
         password +=
             characters[
-                random[i] %
+                randomValues[i] %
                 characters.length
             ];
 
     }
 
-
     return password;
-
 }
 
 
 /* =========================================================
-   GENERATE PASSWORD BUTTON
+   GENERATE PASSWORD
 ========================================================= */
 
 generatePassword.addEventListener(
     "click",
-    () => {
+    function () {
 
         const password =
             generateRandomPassword(12);
 
-
-        /* Put password into BOTH fields */
 
         signupPassword.value =
             password;
@@ -473,8 +343,7 @@ generatePassword.addEventListener(
 
 
         /*
-            Show the generated password
-            automatically.
+            Show generated password.
         */
 
         signupPassword.type =
@@ -485,54 +354,47 @@ generatePassword.addEventListener(
 
 
         /*
-            Update both eye buttons.
+            Update eye buttons.
         */
 
         document
-            .querySelectorAll(
-                '.eye-button[data-password="signupPassword"], .eye-button[data-password="confirmPassword"]'
-            )
+            .querySelectorAll(".eye-button")
             .forEach(button => {
 
-                const openEye =
-                    button.querySelector(
-                        ".eye-open"
+                const id =
+                    button.getAttribute(
+                        "data-password"
                     );
 
-                const closedEye =
-                    button.querySelector(
-                        ".eye-closed"
+                if (
+                    id === "signupPassword" ||
+                    id === "confirmPassword"
+                ) {
+
+                    button.classList.add(
+                        "showing"
                     );
 
-                openEye.style.display =
-                    "none";
+                    button.setAttribute(
+                        "aria-label",
+                        "Hide password"
+                    );
 
-                closedEye.style.display =
-                    "block";
+                    button.setAttribute(
+                        "title",
+                        "Hide password"
+                    );
 
-                button.setAttribute(
-                    "aria-label",
-                    "Hide password"
-                );
-
-                button.setAttribute(
-                    "title",
-                    "Hide password"
-                );
+                }
 
             });
 
 
-        /*
-            Change button temporarily
-            so the user knows it worked.
-        */
-
-        const originalHTML =
-            generatePassword.innerHTML;
+        const oldHTML =
+            this.innerHTML;
 
 
-        generatePassword.innerHTML = `
+        this.innerHTML = `
             <span class="generate-icon">✓</span>
             <span>Password generated!</span>
         `;
@@ -545,8 +407,8 @@ generatePassword.addEventListener(
 
         setTimeout(() => {
 
-            generatePassword.innerHTML =
-                originalHTML;
+            this.innerHTML =
+                oldHTML;
 
         }, 1800);
 
@@ -560,12 +422,11 @@ generatePassword.addEventListener(
 
 signup.addEventListener(
     "submit",
-    event => {
+    function (event) {
 
         event.preventDefault();
 
-        signupError.textContent =
-            "";
+        signupError.textContent = "";
 
 
         const button =
@@ -577,96 +438,70 @@ signup.addEventListener(
         const username =
             signupUsername.value.trim();
 
-
         const name =
-            displayName.value;
-
+            displayName.value.trim();
 
         const password =
             signupPassword.value;
-
 
         const confirm =
             confirmPassword.value;
 
 
-        /* =====================================
-           USERNAME
-        ===================================== */
+        /* USERNAME */
 
-        if (
-            !validUsername(username)
-        ) {
+        if (!validUsername(username)) {
 
             signupError.textContent =
                 "Username can only contain letters, numbers, _ and -.";
 
             return;
-
         }
 
 
-        /* =====================================
-           DISPLAY NAME
-        ===================================== */
+        /* DISPLAY NAME */
 
-        if (
-            !validDisplayName(name)
-        ) {
+        if (!validDisplayName(name)) {
 
             signupError.textContent =
                 "Please enter a display name.";
 
             return;
-
         }
 
 
-        /* =====================================
-           PASSWORD
-        ===================================== */
+        /* PASSWORD */
 
-        if (
-            !validPassword(password)
-        ) {
+        if (!validPassword(password)) {
 
             signupError.textContent =
                 "Password must be 6–32 characters and contain only letters and numbers.";
 
             return;
-
         }
 
 
-        /* =====================================
-           CONFIRM PASSWORD
-        ===================================== */
+        /* CONFIRM */
 
-        if (
-            password !== confirm
-        ) {
+        if (password !== confirm) {
 
             signupError.textContent =
                 "Passwords do not match.";
 
             return;
-
         }
 
-
-        /* =====================================
-           CHECK USERNAME
-        ===================================== */
 
         const users =
             getUsers();
 
 
+        /* CHECK USERNAME */
+
         const usernameTaken =
             users.some(
                 user =>
-                    user.username
-                        .toLowerCase() ===
+                    user.username.toLowerCase() ===
                     username.toLowerCase()
             );
 
@@ -677,13 +512,10 @@ signup.addEventListener(
                 "That username is already taken.";
 
             return;
-
         }
 
 
-        /* =====================================
-           LOADING
-        ===================================== */
+        /* LOADING */
 
         button.classList.add(
             "loading"
@@ -720,37 +552,65 @@ signup.addEventListener(
                 newUser
             );
 
-
             saveUsers(
                 users
             );
+
+
+            /* =====================================
+               REMEMBER LOGIN INFORMATION
+            ===================================== */
+
+            loginUsername.value =
+                username;
+
+            loginPassword.value =
+                password;
+
+
+            /* =====================================
+               RESET SIGNUP
+            ===================================== */
+
+            signup.reset();
+
+
+            /*
+                reset() would normally erase the
+                generated password, but we already
+                copied it to login.
+            */
 
 
             button.classList.remove(
                 "loading"
             );
 
-            button.disabled =
-                false;
+            button.disabled = false;
 
 
-            signup.reset();
-
+            /* =====================================
+               GO TO LOGIN
+            ===================================== */
 
             openLogin();
 
 
-            document
-                .getElementById(
-                    "loginUsername"
-                )
-                .value =
+            /*
+                Make sure both fields remain filled.
+            */
+
+            loginUsername.value =
                 username;
+
+            loginPassword.value =
+                password;
 
 
             showToast(
-                "Account created! You can now log in."
+                "Account created! Your login details are ready."
             );
+
 
         }, 650);
 
@@ -764,12 +624,11 @@ signup.addEventListener(
 
 login.addEventListener(
     "submit",
-    event => {
+    function (event) {
 
         event.preventDefault();
 
-        loginError.textContent =
-            "";
+        loginError.textContent = "";
 
 
         const button =
@@ -779,20 +638,10 @@ login.addEventListener(
 
 
         const username =
-            document
-                .getElementById(
-                    "loginUsername"
-                )
-                .value
-                .trim();
-
+            loginUsername.value.trim();
 
         const password =
-            document
-                .getElementById(
-                    "loginPassword"
-                )
-                .value;
+            loginPassword.value;
 
 
         const users =
@@ -802,8 +651,7 @@ login.addEventListener(
         const user =
             users.find(
                 account =>
-                    account.username
-                        .toLowerCase() ===
+                    account.username.toLowerCase() ===
                     username.toLowerCase() &&
                     account.password ===
                     password
@@ -816,16 +664,16 @@ login.addEventListener(
                 "Invalid username or password.";
 
             return;
-
         }
 
+
+        /* LOADING */
 
         button.classList.add(
             "loading"
         );
 
-        button.disabled =
-            true;
+        button.disabled = true;
 
 
         setTimeout(() => {
@@ -846,9 +694,7 @@ login.addEventListener(
 
             localStorage.setItem(
                 CURRENT_USER_KEY,
-                JSON.stringify(
-                    session
-                )
+                JSON.stringify(session)
             );
 
 
@@ -856,8 +702,7 @@ login.addEventListener(
                 "loading"
             );
 
-            button.disabled =
-                false;
+            button.disabled = false;
 
 
             showToast(
@@ -870,6 +715,7 @@ login.addEventListener(
                 session
             );
 
+
         }, 650);
 
     }
@@ -877,7 +723,7 @@ login.addEventListener(
 
 
 /* =========================================================
-   CHECK EXISTING SESSION
+   EXISTING SESSION
 ========================================================= */
 
 const existingSession =
@@ -890,13 +736,14 @@ if (existingSession) {
 
     try {
 
-        const user =
+        const session =
             JSON.parse(
                 existingSession
             );
 
         console.log(
-            `Luma session: @${user.username}`
+            "Luma session:",
+            session
         );
 
     } catch {
