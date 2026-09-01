@@ -2748,3 +2748,225 @@ if (existingSession) {
 ========================================================= */
 
 renderDMList();
+/* =========================================================
+   LUMA — TEST CHAT
+========================================================= */
+
+const chatApp =
+    document.getElementById("chatApp");
+
+const messages =
+    document.getElementById("messages");
+
+const messageInput =
+    document.getElementById("messageInput");
+
+const sendMessage =
+    document.getElementById("sendMessage");
+
+
+/* =========================================================
+   OPEN TEST CHAT AFTER LOGIN
+========================================================= */
+
+function openTestChat() {
+
+    if (!chatApp) return;
+
+    document.querySelector(".auth-container").style.display =
+        "none";
+
+    document.querySelector(".background").style.display =
+        "none";
+
+    chatApp.style.display =
+        "flex";
+
+}
+
+
+/* =========================================================
+   SEND MESSAGE
+========================================================= */
+
+function sendTestMessage() {
+
+    const text =
+        messageInput.value.trim();
+
+    if (!text) return;
+
+
+    const message =
+        document.createElement("div");
+
+    message.className =
+        "message";
+
+
+    message.innerHTML = `
+
+        <div class="message-avatar">
+            ME
+        </div>
+
+        <div class="message-content">
+
+            <div class="message-meta">
+
+                <strong>You</strong>
+
+                <span>
+                    Today
+                </span>
+
+            </div>
+
+            <div class="message-text"></div>
+
+        </div>
+
+    `;
+
+
+    message
+        .querySelector(".message-text")
+        .textContent = text;
+
+
+    messages.appendChild(message);
+
+
+    messageInput.value = "";
+
+
+    messages.scrollTop =
+        messages.scrollHeight;
+
+
+    /* TEST RESPONSE */
+
+    setTimeout(() => {
+
+        const reply =
+            document.createElement("div");
+
+        reply.className =
+            "message";
+
+
+        reply.innerHTML = `
+
+            <div class="message-avatar">
+                LT
+            </div>
+
+            <div class="message-content">
+
+                <div class="message-meta">
+
+                    <strong>LumaTest</strong>
+
+                    <span>
+                        Today
+                    </span>
+
+                </div>
+
+                <div class="message-text"></div>
+
+            </div>
+
+        `;
+
+
+        reply
+            .querySelector(".message-text")
+            .textContent =
+                "Got your message! 👋 This is only a test chat.";
+
+        messages.appendChild(reply);
+
+
+        messages.scrollTop =
+            messages.scrollHeight;
+
+    }, 600);
+
+}
+
+
+/* =========================================================
+   SEND BUTTON
+========================================================= */
+
+if (sendMessage) {
+
+    sendMessage.addEventListener(
+        "click",
+        sendTestMessage
+    );
+
+}
+
+
+/* =========================================================
+   ENTER TO SEND
+========================================================= */
+
+if (messageInput) {
+
+    messageInput.addEventListener(
+        "keydown",
+        event => {
+
+            if (
+                event.key === "Enter" &&
+                !event.shiftKey
+            ) {
+
+                event.preventDefault();
+
+                sendTestMessage();
+
+            }
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   CONNECT LOGIN TO TEST CHAT
+========================================================= */
+
+/*
+   We only hook into the existing login button.
+   Your account creation/login system itself is untouched.
+*/
+
+if (login) {
+
+    login.addEventListener(
+        "submit",
+        () => {
+
+            setTimeout(() => {
+
+                if (
+                    localStorage.getItem(
+                        CURRENT_USER_KEY
+                    )
+                ) {
+
+                    openTestChat();
+
+                }
+
+            }, 750);
+
+        }
+    );
+
+}
