@@ -755,3 +755,46 @@ if (existingSession) {
     }
 
 }
+/* =========================================================
+   DISCORD OAUTH
+========================================================= */
+
+const DISCORD_OAUTH_URL =
+    "https://luma-backend-w8gq.onrender.com/auth/discord";
+
+
+const discordLogin =
+    document.getElementById("discordLogin");
+
+const discordSignup =
+    document.getElementById("discordSignup");
+
+
+if (discordLogin) {
+
+    discordLogin.addEventListener(
+        "click",
+        () => {
+
+            window.location.href =
+                DISCORD_OAUTH_URL;
+
+        }
+    );
+
+}
+
+
+if (discordSignup) {
+
+    discordSignup.addEventListener(
+        "click",
+        () => {
+
+            window.location.href =
+                DISCORD_OAUTH_URL;
+
+        }
+    );
+
+}
